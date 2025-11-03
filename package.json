@@ -1,0 +1,40 @@
+{
+  "name": "introflo.io",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "seed": "ts-node --esm prisma/seed.ts"
+  },
+  "dependencies": {
+    "@auth/core": "^0.41.0",
+    "@auth/supabase-adapter": "^1.11.1",
+    "@prisma/client": "^5.0.0",
+    "@react-google-maps/api": "^2.20.7",
+    "@stripe/stripe-js": "^8.2.0",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.28.0",
+    "@types/google.maps": "^3.58.1",
+    "next": "^15.0.0",
+    "next-auth": "^5.0.0-beta.30",
+    "posthog-js": "^1.15.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resend": "^1.0.0",
+    "stripe": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "eslint": "^8.48.0",
+    "prettier": "^2.8.0",
+    "prisma": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.0"
+  }
+}

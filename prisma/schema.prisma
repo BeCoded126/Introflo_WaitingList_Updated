@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Org {
+  id            String         @id @default(uuid())
+  name          String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  users         User[]
+  facilities    Facility[]
+  subscriptions Subscription[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      UserRole @default(MEMBER)
+  orgId     String
+  org       Org      @relation(fields: [orgId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Facility {
+  id          String            @id @default(uuid())
+  orgId       String
+  org         Org               @relation(fields: [orgId], references: [id])
+  name        String
+  description String?
+  address     String?
+  city        String?
+  state       String?
+  zip         String?
+  phone       String?
+  website     String?
+  verified    Boolean           @default(false)
+  createdAt   DateTime          @default(now())
+  services    FacilityService[]
+  areas       ServiceArea[]
+
+  @@index([city, state])
+}
+
+model Service {
+  id               String            @id @default(uuid())
+  name             String            @unique
+  slug             String            @unique
+  facilityServices FacilityService[]
+}
+
+model FacilityService {
+  id         String   @id @default(uuid())
+  facilityId String
+  serviceId  String
+  facility   Facility @relation(fields: [facilityId], references: [id])
+  service    Service  @relation(fields: [serviceId], references: [id])
+
+  @@index([serviceId])
+}
+
+model ServiceArea {
+  id          String   @id @default(uuid())
+  facilityId  String
+  facility    Facility @relation(fields: [facilityId], references: [id])
+  city        String
+  state       String
+  radiusMiles Int
+}
+
+model Match {
+  id          String      @id @default(uuid())
+  orgId       String
+  facilityAId String
+  facilityBId String
+  score       Float       @default(0)
+  status      MatchStatus @default(PENDING)
+  createdAt   DateTime    @default(now())
+
+  @@index([orgId, score])
+}
+
+enum MatchStatus {
+  PENDING
+  MATCHED
+  CLOSED
+}
+
+model Referral {
+  id           String   @id @default(uuid())
+  orgId        String
+  fromFacility String
+  toFacility   String
+  note         String?
+  status       String   @default("open")
+  createdAt    DateTime @default(now())
+}
+
+model Interaction {
+  id         String          @id @default(uuid())
+  facilityId String
+  type       InteractionType
+  content    String?
+  createdAt  DateTime        @default(now())
+}
+
+enum InteractionType {
+  MESSAGE
+  CALL
+  MEETING
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  orgId     String
+  data      Json
+  createdAt DateTime @default(now())
+}
+
+model Subscription {
+  id        String   @id @default(uuid())
+  orgId     String
+  org       Org      @relation(fields: [orgId], references: [id])
+  stripeId  String
+  tier      String
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  orgId     String
+  action    String
+  payload   Json?
+  createdAt DateTime @default(now())
+}

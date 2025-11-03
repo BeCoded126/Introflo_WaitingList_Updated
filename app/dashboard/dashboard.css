@@ -1,0 +1,32 @@
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  height: fit-content;
+}
+
+.content-area {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+}
+
+.match-area {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.chat-area {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+}

@@ -1,0 +1,53 @@
+.swipe-deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.stack {
+  width: 100%;
+  position: relative;
+}
+
+.top-card {
+  position: relative;
+  z-index: 1;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.skip {
+  background-color: #ff4444;
+  color: white;
+}
+
+.match {
+  background-color: #44ff44;
+  color: white;
+}
+
+.empty {
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+}
