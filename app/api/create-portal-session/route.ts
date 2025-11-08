@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { stripe, createPortalSession } from "@/lib/stripe";
 import { getCurrentUser } from "@/lib/api";
 import { createClient } from "@/lib/api";
 
 export async function POST(req: Request) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: "Stripe is not configured" },
+        { status: 503 }
+      );
+    }
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -26,10 +32,10 @@ export async function POST(req: Request) {
       );
     }
 
-    const session = await stripe.billingPortal.sessions.create({
-      customer: org.stripe_customer_id,
-      return_url: `${req.headers.get("origin")}/app/subscription`,
-    });
+    const session = await createPortalSession(
+      org.stripe_customer_id,
+      `${req.headers.get("origin")}/app/subscription`
+    );
 
     return NextResponse.json({ url: session.url });
   } catch (error) {

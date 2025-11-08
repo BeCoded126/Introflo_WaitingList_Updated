@@ -13,17 +13,29 @@
 
 /* User Profile Section */
 .user-profile {
-  padding: 20px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 16px;
+  margin: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  background: white;
+  font-weight: 600;
 }
 
 .user-profile:hover {
-  background: #f9fafb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 127, 101, 0.2);
+  border-color: #ff7f65;
+  background: linear-gradient(135deg, #ff7f65, #ffa590);
+}
+
+.user-profile:hover .user-name,
+.user-profile:hover .user-status {
+  color: white;
 }
 
 .user-avatar {

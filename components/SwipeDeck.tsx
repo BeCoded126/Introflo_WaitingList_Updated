@@ -146,7 +146,8 @@ export default function SwipeDeck({
               title="Skip"
               disabled={isAnimating}
             >
-              ✕
+              <span aria-hidden="true">✕</span>
+              <span style={{ marginLeft: 6 }}>Nope</span>
             </button>
             <button
               className={`${styles.btn} ${styles.match}`}
@@ -155,7 +156,8 @@ export default function SwipeDeck({
               title="Match"
               disabled={isAnimating}
             >
-              ♥
+              <span aria-hidden="true">✓</span>
+              <span style={{ marginLeft: 6 }}>Match</span>
             </button>
           </div>
         </div>

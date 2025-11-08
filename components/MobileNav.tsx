@@ -126,22 +126,29 @@ export default function MobileNav({
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            padding: 8px 12px;
-            background: none;
-            border: none;
-            color: #9ca3af;
+            padding: 12px 12px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            color: #6b7280;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
-            border-radius: 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin: 0 4px;
           }
 
-          .mobile-nav-btn:active {
-            background: #f3f4f6;
+          .mobile-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 127, 101, 0.2);
+            border-color: #ff7f65;
           }
 
           .mobile-nav-btn.active {
-            color: #ff655c;
+            background: linear-gradient(135deg, #ff7f65, #ffa590);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(255, 127, 101, 0.3);
           }
 
           .mobile-nav-btn svg {
@@ -156,7 +163,7 @@ export default function MobileNav({
 
           .mobile-nav-btn span {
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 600;
           }
 
           .badge-count {
@@ -171,6 +178,11 @@ export default function MobileNav({
             font-weight: 700;
             min-width: 18px;
             text-align: center;
+          }
+
+          .mobile-nav-btn.active .badge-count {
+            background: white;
+            color: #ff7f65;
           }
         }
       `}</style>

@@ -2,11 +2,22 @@
 
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import type { Subscription } from "@/types";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
+
+interface Subscription {
+  id: string;
+  organizationId: string;
+  plan: "basic" | "pro" | "enterprise";
+  status: "active" | "past_due" | "canceled";
+  stripeId?: string;
+  startDate: Date;
+  endDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 interface Plan {
   id: string;
@@ -58,15 +69,10 @@ const plans: Plan[] = [
   },
 ];
 
-interface SubscriptionPageProps {
-  currentSubscription?: Subscription;
-}
-
-export default function SubscriptionPage({
-  currentSubscription,
-}: SubscriptionPageProps) {
+export default function SubscriptionPage() {
   const [loading, setLoading] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [currentSubscription] = useState<Subscription | undefined>(undefined); // TODO: fetch from API
 
   const handleSubscribe = async (planId: string) => {
     try {

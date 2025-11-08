@@ -1,17 +1,32 @@
 import Stripe from "stripe";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("STRIPE_SECRET_KEY is not set");
+// Lazy-init pattern: allow module to load but Stripe instance undefined if key missing
+let stripe: Stripe | undefined;
+
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2023-10-16" as any,
+    typescript: true,
+  });
+} else {
+  console.warn(
+    "[stripe] STRIPE_SECRET_KEY not set – subscription endpoints will return 503."
+  );
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16" as any,
-  typescript: true,
-});
+export { stripe };
+
+function ensureStripe(): Stripe {
+  if (!stripe) {
+    throw new Error("Stripe is not configured (missing STRIPE_SECRET_KEY)");
+  }
+  return stripe;
+}
 
 export async function createSubscription(customerId: string, priceId: string) {
+  const client = ensureStripe();
   try {
-    const subscription = await stripe.subscriptions.create({
+    const subscription = await client.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
       payment_behavior: "default_incomplete",
@@ -31,8 +46,9 @@ export async function createSubscription(customerId: string, priceId: string) {
 }
 
 export async function cancelSubscription(subscriptionId: string) {
+  const client = ensureStripe();
   try {
-    const subscription = await stripe.subscriptions.cancel(subscriptionId);
+    const subscription = await client.subscriptions.cancel(subscriptionId);
     return subscription;
   } catch (error) {
     console.error("Error canceling subscription:", error);
@@ -44,10 +60,11 @@ export async function updateSubscription(
   subscriptionId: string,
   priceId: string
 ) {
+  const client = ensureStripe();
   try {
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    const subscription = await client.subscriptions.retrieve(subscriptionId);
 
-    const updatedSubscription = await stripe.subscriptions.update(
+    const updatedSubscription = await client.subscriptions.update(
       subscriptionId,
       {
         items: [
@@ -67,8 +84,9 @@ export async function updateSubscription(
 }
 
 export async function createCustomer(email: string, name?: string) {
+  const client = ensureStripe();
   try {
-    const customer = await stripe.customers.create({
+    const customer = await client.customers.create({
       email,
       name,
     });
@@ -80,8 +98,9 @@ export async function createCustomer(email: string, name?: string) {
 }
 
 export async function getSubscription(subscriptionId: string) {
+  const client = ensureStripe();
   try {
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    const subscription = await client.subscriptions.retrieve(subscriptionId);
     return subscription;
   } catch (error) {
     console.error("Error retrieving subscription:", error);
@@ -90,8 +109,9 @@ export async function getSubscription(subscriptionId: string) {
 }
 
 export async function listInvoices(customerId: string) {
+  const client = ensureStripe();
   try {
-    const invoices = await stripe.invoices.list({
+    const invoices = await client.invoices.list({
       customer: customerId,
       limit: 10,
     });
@@ -106,8 +126,9 @@ export async function createPortalSession(
   customerId: string,
   returnUrl: string
 ) {
+  const client = ensureStripe();
   try {
-    const session = await stripe.billingPortal.sessions.create({
+    const session = await client.billingPortal.sessions.create({
       customer: customerId,
       return_url: returnUrl,
     });

@@ -7,6 +7,13 @@ import { createServerClient } from "@supabase/ssr";
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
+  if (!stripe) {
+    return NextResponse.json(
+      { error: "Stripe is not configured" },
+      { status: 503 }
+    );
+  }
+
   const body = await req.text();
   // Use the raw request headers to retrieve stripe signature
   const signature = req.headers.get("stripe-signature");

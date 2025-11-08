@@ -3,10 +3,11 @@ import Chat from "@/components/Chat";
 import { getCurrentUser, getFacilityById } from "@/lib/api";
 
 export default async function ChatPage({
-  params: { facilityId },
+  params,
 }: {
-  params: { facilityId: string };
+  params: Promise<{ facilityId: string }>;
 }) {
+  const { facilityId } = await params;
   const [user, facility] = await Promise.all([
     getCurrentUser(),
     getFacilityById(facilityId),

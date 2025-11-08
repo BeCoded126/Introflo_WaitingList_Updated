@@ -16,8 +16,8 @@ const isSupabaseConfigured = (() => {
   return Boolean(validUrl && validKey);
 })();
 
-export const createClient = cache(() => {
-  const cookieStore: any = cookies();
+export const createClient = cache(async () => {
+  const cookieStore = await cookies();
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -39,7 +39,7 @@ export const createClient = cache(() => {
 
 export async function getFacilityMatches() {
   if (!isSupabaseConfigured) return [];
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: matches } = await supabase
     .from("matches")
     .select("*")
@@ -51,7 +51,7 @@ export async function getFacilityMatches() {
 
 export async function getFacilityById(id: string) {
   if (!isSupabaseConfigured) return null as any;
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: facility } = await supabase
     .from("facilities")
     .select("*")
@@ -63,7 +63,7 @@ export async function getFacilityById(id: string) {
 
 export async function getCurrentUser() {
   if (!isSupabaseConfigured) return null;
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -83,7 +83,7 @@ export async function getUserOrganization() {
   const user = await getCurrentUser();
   if (!user?.org_id) return null;
   if (!isSupabaseConfigured) return null;
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: org } = await supabase
     .from("orgs")
     .select("*")
@@ -95,7 +95,7 @@ export async function getUserOrganization() {
 
 export async function getReferrals() {
   if (!isSupabaseConfigured) return [];
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: referrals } = await supabase
     .from("referrals")
     .select(
@@ -112,11 +112,11 @@ export async function getReferrals() {
 
 export async function getFacilityServiceAreas() {
   if (!isSupabaseConfigured) return [];
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: areas } = await supabase.from("service_areas").select("*");
 
   return (
-    areas?.map((area) => ({
+    areas?.map((area: any) => ({
       id: area.id,
       lat: area.lat || 0,
       lng: area.lng || 0,

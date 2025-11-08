@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { stripe, createSubscription } from "@/lib/stripe";
+import { stripe, createSubscription, createCustomer } from "@/lib/stripe";
 import { getCurrentUser } from "@/lib/api";
 import { createClient } from "@/lib/api";
 import { cookies } from "next/headers";
@@ -12,6 +12,12 @@ const PRICE_IDS = {
 
 export async function POST(req: Request) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: "Stripe is not configured" },
+        { status: 503 }
+      );
+    }
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -40,12 +46,7 @@ export async function POST(req: Request) {
 
     // Create customer if doesn't exist
     if (!customerId) {
-      const customer = await stripe.customers.create({
-        email: user.email,
-        metadata: {
-          org_id: user.org_id,
-        },
-      });
+      const customer = await createCustomer(user.email, user.name);
 
       customerId = customer.id;
 

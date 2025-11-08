@@ -1,11 +1,23 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import LogoMark from "@/components/LogoMark";
 import QRCode from "qrcode";
 
-export default function Home() {
+export default function Waitlist() {
+  const waitlistRef = useRef<HTMLDivElement>(null);
+  const [isFloating, setIsFloating] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!waitlistRef.current) return;
+      const rect = waitlistRef.current.getBoundingClientRect();
+      setIsFloating(rect.top <= 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const [activePhone, setActivePhone] = useState(0);
   const [qrCode, setQrCode] = useState("");
   const [qrTarget, setQrTarget] = useState("");
@@ -98,39 +110,6 @@ export default function Home() {
           >
             introflo.io
           </span>
-          <Link
-            href="/auth"
-            style={{
-              padding: "12px 28px",
-              fontSize: "15px",
-              borderRadius: "12px",
-              fontWeight: 600,
-              background: "white",
-              color: "#ff7f65",
-              border: "2px solid #ff7f65",
-              textDecoration: "none",
-              display: "inline-block",
-              transition: "all 0.2s",
-              position: "absolute",
-              right: "40px",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.background = "linear-gradient(135deg, #ff7f65, #ffa590)";
-              e.currentTarget.style.color = "white";
-              e.currentTarget.style.borderColor = "transparent";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 127, 101, 0.3)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.background = "white";
-              e.currentTarget.style.color = "#ff7f65";
-              e.currentTarget.style.borderColor = "#ff7f65";
-              e.currentTarget.style.boxShadow = "none";
-            }}
-          >
-            Sign In
-          </Link>
         </div>
       </nav>
 
@@ -163,7 +142,7 @@ export default function Home() {
                 maxWidth: "780px",
               }}
             >
-              We empower care teams to connect faster and smarter.
+              We Empower Care Teams to Connect Faster and Smarter.
             </h1>
             <p
               style={{
@@ -175,56 +154,64 @@ export default function Home() {
             >
               Connect with verified facilities, match instantly, chat securely, and manage referrals—all in one streamlined workspace.
             </p>
-            <div style={{ display: "flex", gap: "16px" }}>
-              <Link
-                href="/app/dashboard"
+            {/* Waitlist input field */}
+            <div
+              ref={waitlistRef}
+              id="waitlist-sticky"
+              style={{
+                display: "flex",
+                gap: "12px",
+                alignItems: "center",
+                marginTop: "16px",
+                position: isFloating ? "fixed" : "static",
+                top: isFloating ? 0 : undefined,
+                left: isFloating ? 0 : undefined,
+                width: isFloating ? "100vw" : undefined,
+                zIndex: 200,
+                background: "rgba(255,255,255,0.97)",
+                padding: "12px 16px",
+                borderRadius: isFloating ? 0 : "14px",
+                boxShadow: isFloating ? "0 2px 16px rgba(255,127,101,0.12)" : "0 2px 8px rgba(255,127,101,0.08)",
+                border: "1.5px solid #ffe4e1",
+                borderBottom: isFloating ? "1.5px solid #ffe4e1" : undefined,
+                transition: "all 0.2s"
+              }}
+            >
+                <input
+                  type="email"
+                  placeholder="Join waitlist"
+                  style={{
+                    flex: 1,
+                    padding: "14px 18px",
+                    fontSize: "16px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #ff7f65",
+                    outline: "none",
+                    background: "transparent",
+                    color: "#111827",
+                    fontWeight: 500,
+                    boxShadow: "0 2px 8px rgba(255,127,101,0.04)",
+                    transition: "border 0.2s"
+                  }}
+                />
+              <button
                 style={{
-                  padding: "16px 36px",
-                  fontSize: "17px",
-                  borderRadius: "12px",
-                  fontWeight: 600,
+                  padding: "14px 28px",
+                  fontSize: "16px",
+                  borderRadius: "10px",
+                  fontWeight: 700,
                   background: "linear-gradient(135deg, #ff7f65, #ffa590)",
                   color: "white",
                   border: "none",
-                  textDecoration: "none",
-                  display: "inline-block",
-                  boxShadow: "0 4px 14px rgba(255, 127, 101, 0.3)",
-                  transition: "all 0.2s",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 14px rgba(255, 127, 101, 0.18)",
+                  transition: "all 0.2s"
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 127, 101, 0.4)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 4px 14px rgba(255, 127, 101, 0.3)";
-                }}
+                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
               >
-                Get Started
-              </Link>
-              <Link
-                href="/app/dashboard"
-                style={{
-                  padding: "16px 36px",
-                  fontSize: "17px",
-                  borderRadius: "12px",
-                  fontWeight: 600,
-                  background: "white",
-                  color: "#ff7f65",
-                  border: "2px solid #ff7f65",
-                  textDecoration: "none",
-                  display: "inline-block",
-                  transition: "all 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#fff5f3";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "white";
-                }}
-              >
-                View Demo
-              </Link>
+                Join
+              </button>
             </div>
           </div>
 
@@ -651,60 +638,64 @@ export default function Home() {
             alignItems: "center",
           }}
         >
-          <div>
+          <div style={{ gridColumn: "1 / span 2", textAlign: "center" }}>
             <h3
               style={{
-                fontSize: "32px",
+                fontSize: "28px",
                 fontWeight: 700,
-                marginBottom: "16px",
+                marginBottom: "18px",
                 background: "linear-gradient(135deg, #ff7f65, #ffa590)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Get the app
+              Be One of the First to Gain Access
             </h3>
-            <p
+            <div
               style={{
-                fontSize: "18px",
-                color: "#6b7280",
-                marginBottom: "32px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "12px",
+                maxWidth: "420px",
+                margin: "0 auto 32px",
+                alignItems: "center"
               }}
             >
-              Just scan the QR code to get started.
-            </p>
-            <div style={{ display: "flex", gap: "16px", marginBottom: "40px" }}>
-              <Link
-                href="/app/dashboard"
+              <input
+                type="email"
+                placeholder="Join waitlist"
                 style={{
-                  padding: "12px 24px",
-                  fontSize: "15px",
+                  flex: 1,
+                  padding: "14px 18px",
+                  fontSize: "16px",
                   borderRadius: "10px",
-                  fontWeight: 600,
+                  border: "1.5px solid #ff7f65",
+                  outline: "none",
+                  background: "transparent",
+                  color: "#111827",
+                  fontWeight: 500,
+                  boxShadow: "0 2px 8px rgba(255,127,101,0.04)",
+                  transition: "border 0.2s"
+                }}
+              />
+              <button
+                style={{
+                  padding: "14px 28px",
+                  fontSize: "16px",
+                  borderRadius: "10px",
+                  fontWeight: 700,
                   background: "linear-gradient(135deg, #ff7f65, #ffa590)",
                   color: "white",
-                  textDecoration: "none",
-                  display: "inline-block",
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 14px rgba(255, 127, 101, 0.18)",
+                  transition: "all 0.2s"
                 }}
+                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
               >
-                Join Waitlist
-              </Link>
-              <Link
-                href="/app/dashboard"
-                style={{
-                  padding: "12px 24px",
-                  fontSize: "15px",
-                  borderRadius: "10px",
-                  fontWeight: 600,
-                  background: "white",
-                  color: "#ff7f65",
-                  border: "2px solid #ff7f65",
-                  textDecoration: "none",
-                  display: "inline-block",
-                }}
-              >
-                Sign In
-              </Link>
+                Join
+              </button>
             </div>
             <div
               style={{
@@ -715,47 +706,6 @@ export default function Home() {
               }}
             >
               © 2025 introflo.io. All rights reserved.
-            </div>
-          </div>
-          
-          {/* QR Code */}
-          <div
-            style={{
-              background: "white",
-              padding: "32px",
-              borderRadius: "20px",
-              boxShadow: "0 8px 24px rgba(255, 127, 101, 0.15)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {qrCode && (
-              <img
-                src={qrCode}
-                alt="QR Code"
-                style={{
-                  width: "180px",
-                  height: "180px",
-                  borderRadius: "12px",
-                }}
-              />
-            )}
-            <div
-              style={{
-                marginTop: "16px",
-                fontSize: "13px",
-                color: "#6b7280",
-                textAlign: "center",
-              }}
-            >
-              Scan to view on mobile
-              {qrTarget && (
-                <div style={{ marginTop: "6px", fontSize: "11px", color: "#9ca3af" }}>
-                  URL: <a href={qrTarget} style={{ color: "#ff7f65", textDecoration: "none" }}>{qrTarget}</a>
-                </div>
-              )}
             </div>
           </div>
         </div>
