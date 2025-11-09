@@ -2,8 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   // Allow cross-origin requests from local network for mobile testing
-  experimental: {
-    allowedDevOrigins: ['192.168.0.60:3000'],
+  // Remove unsupported experimental flags that trigger warnings
+  async redirects() {
+    return [
+      // Redirect root to waitlist page
+      { source: '/', destination: '/waitlist', permanent: false },
+    ];
   },
 };
 
