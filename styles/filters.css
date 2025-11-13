@@ -108,7 +108,7 @@
 
 .filter-input:focus {
   outline: none;
-  border-color: #ff655c;
+  border-color: var(--accent-warm-secondary);
 }
 
 .filter-input::placeholder {
@@ -135,13 +135,13 @@
 }
 
 .filter-option:hover {
-  border-color: #ff655c;
-  background: #fff5f3;
+  border-color: var(--accent-warm-primary);
+  background: var(--accent-warm-secondary-15);
 }
 
 .filter-option.active {
-  border-color: #ff655c;
-  background: #ff655c;
+  border-color: var(--accent-warm-primary);
+  background: var(--accent-warm-primary);
   color: white;
 }
 
@@ -176,12 +176,15 @@
 }
 
 .apply-filters-btn {
-  background: linear-gradient(135deg, #ff655c, #44bc0c);
-  border: none;
+  background: var(--accent-warm-primary);
+  border: 1px solid var(--accent-warm-primary);
   color: white;
+  box-shadow: var(--shadow-warm);
+  transition: background .18s ease, transform .16s ease, box-shadow .25s ease;
 }
 
 .apply-filters-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 101, 92, 0.3);
+  background: var(--accent-warm-primary-hover);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-warm-hover);
 }

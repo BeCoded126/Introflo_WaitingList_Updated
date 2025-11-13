@@ -126,7 +126,7 @@
 }
 
 .chat-message.sent .message-bubble {
-  background: linear-gradient(135deg, #ff655c, #ff8575);
+  background: var(--accent-warm-primary);
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -181,7 +181,7 @@
 }
 
 .chat-textarea:focus {
-  border-color: #ff655c;
+  border-color: var(--accent-warm-secondary);
 }
 
 .chat-textarea::placeholder {
@@ -190,20 +190,22 @@
 
 .send-btn {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #ff655c, #44bc0c);
+  background: var(--accent-warm-primary);
   color: white;
-  border: none;
+  border: 1px solid var(--accent-warm-primary);
   border-radius: 22px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background .18s ease, transform .16s ease, box-shadow .25s ease;
   flex-shrink: 0;
+  box-shadow: var(--shadow-warm);
 }
 
 .send-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 101, 92, 0.3);
+  background: var(--accent-warm-primary-hover);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-warm-hover);
 }
 
 .send-btn:disabled {

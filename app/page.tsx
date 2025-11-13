@@ -70,7 +70,7 @@ export default function Home() {
         style={{
           background: "rgba(255, 255, 255, 0.95)",
           backdropFilter: "blur(10px)",
-          borderBottom: "1px solid rgba(255, 127, 101, 0.1)",
+          borderBottom: "1px solid rgba(217, 162, 139, 0.15)",
           position: "sticky",
           top: 0,
           zIndex: 100,
@@ -91,7 +91,7 @@ export default function Home() {
             style={{
               fontSize: "28px",
               fontWeight: 700,
-              background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+              background: "var(--accent-warm-primary)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -106,8 +106,8 @@ export default function Home() {
               borderRadius: "12px",
               fontWeight: 600,
               background: "white",
-              color: "#ff7f65",
-              border: "2px solid #ff7f65",
+              color: "var(--accent-warm-primary)",
+              border: "2px solid var(--accent-warm-primary)",
               textDecoration: "none",
               display: "inline-block",
               transition: "all 0.2s",
@@ -116,16 +116,16 @@ export default function Home() {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.background = "linear-gradient(135deg, #ff7f65, #ffa590)";
+              e.currentTarget.style.background = "var(--accent-warm-primary)";
               e.currentTarget.style.color = "white";
               e.currentTarget.style.borderColor = "transparent";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 127, 101, 0.3)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(217, 162, 139, 0.2)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.background = "white";
-              e.currentTarget.style.color = "#ff7f65";
-              e.currentTarget.style.borderColor = "#ff7f65";
+              e.currentTarget.style.color = "var(--accent-warm-primary)";
+              e.currentTarget.style.borderColor = "var(--accent-warm-primary)";
               e.currentTarget.style.boxShadow = "none";
             }}
           >
@@ -157,7 +157,7 @@ export default function Home() {
                 fontWeight: 800,
                 lineHeight: 1.1,
                 marginBottom: "24px",
-                background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                background: "var(--accent-warm-primary)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 maxWidth: "780px",
@@ -183,21 +183,21 @@ export default function Home() {
                   fontSize: "17px",
                   borderRadius: "12px",
                   fontWeight: 600,
-                  background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                  background: "var(--accent-warm-primary)",
                   color: "white",
                   border: "none",
                   textDecoration: "none",
                   display: "inline-block",
-                  boxShadow: "0 4px 14px rgba(255, 127, 101, 0.3)",
+                  boxShadow: "0 4px 14px rgba(217, 162, 139, 0.15)",
                   transition: "all 0.2s",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 127, 101, 0.4)";
+                  e.currentTarget.style.boxShadow = "0 6px 20px rgba(217, 162, 139, 0.15)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 4px 14px rgba(255, 127, 101, 0.3)";
+                  e.currentTarget.style.boxShadow = "0 4px 14px rgba(217, 162, 139, 0.15)";
                 }}
               >
                 Get Started
@@ -210,8 +210,8 @@ export default function Home() {
                   borderRadius: "12px",
                   fontWeight: 600,
                   background: "white",
-                  color: "#ff7f65",
-                  border: "2px solid #ff7f65",
+                  color: "var(--accent-warm-primary)",
+                  border: "2px solid var(--accent-warm-primary)",
                   textDecoration: "none",
                   display: "inline-block",
                   transition: "all 0.2s",
@@ -285,7 +285,7 @@ export default function Home() {
                       height: "32px",
                       margin: "0 auto 8px",
                       borderRadius: "8px",
-                      background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                      background: "var(--accent-warm-primary)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -299,7 +299,7 @@ export default function Home() {
                       fontSize: "13px",
                       fontWeight: 700,
                       marginTop: "8px",
-                      background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                      background: "var(--accent-warm-primary)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                     }}
@@ -315,14 +315,14 @@ export default function Home() {
                       background: "white",
                       borderRadius: "20px",
                       overflow: "hidden",
-                      boxShadow: "0 8px 24px rgba(255, 127, 101, 0.15)",
+                      boxShadow: "0 8px 24px rgba(217, 162, 139, 0.15)",
                     }}
                   >
                     <div
                       style={{
                         height: "220px",
                         background:
-                          "linear-gradient(135deg, #ff7f65 0%, #ffa590 100%)",
+                          "linear-gradient(135deg, var(--accent-warm-primary) 0%, var(--accent-warm-secondary) 100%)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -386,13 +386,13 @@ export default function Home() {
                         width: "50px",
                         height: "50px",
                         borderRadius: "50%",
-                        background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                        background: "var(--accent-warm-primary)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: "24px",
                         color: "white",
-                        boxShadow: "0 4px 12px rgba(255, 127, 101, 0.3)",
+                        boxShadow: "0 4px 12px rgba(217, 162, 139, 0.15)",
                       }}
                     >
                       ♥
@@ -411,7 +411,7 @@ export default function Home() {
                 borderRadius: "40px",
                 padding: "12px",
                 boxShadow: activePhone === 1
-                  ? "0 30px 60px rgba(255, 127, 101, 0.4)"
+                  ? "0 30px 60px rgba(217, 162, 139, 0.15)"
                   : "0 20px 40px rgba(0,0,0,0.2)",
                 transform: activePhone === 1 ? "scale(1.05)" : "scale(1)",
                 transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -447,7 +447,7 @@ export default function Home() {
                 <div
                   style={{
                     padding: "12px 20px",
-                    background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                    background: "var(--accent-warm-primary)",
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
@@ -504,7 +504,7 @@ export default function Home() {
                           style={{
                             maxWidth: "80%",
                             background: m.outgoing
-                              ? "linear-gradient(135deg, #ff7f65, #ffa590)"
+                              ? "var(--accent-warm-primary)"
                               : "white",
                             color: m.outgoing ? "white" : "#111827",
                             padding: "10px 14px",
@@ -514,7 +514,7 @@ export default function Home() {
                             fontSize: "12px",
                             lineHeight: 1.5,
                             boxShadow: m.outgoing
-                              ? "0 4px 12px rgba(255,127,101,0.25)"
+                              ? "0 4px 12px rgba(217, 162, 139, 0.15)"
                               : "0 2px 8px rgba(0,0,0,0.05)",
                             transition: "transform 0.3s",
                           }}
@@ -638,7 +638,7 @@ export default function Home() {
         style={{
           background: "#fff5f3",
           padding: "80px 40px 40px",
-          borderTop: "1px solid rgba(255, 127, 101, 0.1)",
+          borderTop: "1px solid rgba(217, 162, 139, 0.15)",
         }}
       >
         <div
@@ -657,7 +657,7 @@ export default function Home() {
                 fontSize: "32px",
                 fontWeight: 700,
                 marginBottom: "16px",
-                background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                background: "var(--accent-warm-primary)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -681,7 +681,7 @@ export default function Home() {
                   fontSize: "15px",
                   borderRadius: "10px",
                   fontWeight: 600,
-                  background: "linear-gradient(135deg, #ff7f65, #ffa590)",
+                  background: "var(--accent-warm-primary)",
                   color: "white",
                   textDecoration: "none",
                   display: "inline-block",
@@ -697,8 +697,8 @@ export default function Home() {
                   borderRadius: "10px",
                   fontWeight: 600,
                   background: "white",
-                  color: "#ff7f65",
-                  border: "2px solid #ff7f65",
+                  color: "var(--accent-warm-primary)",
+                  border: "2px solid var(--accent-warm-primary)",
                   textDecoration: "none",
                   display: "inline-block",
                 }}
@@ -711,7 +711,7 @@ export default function Home() {
                 fontSize: "14px",
                 color: "#9ca3af",
                 paddingTop: "32px",
-                borderTop: "1px solid rgba(255, 127, 101, 0.1)",
+                borderTop: "1px solid rgba(217, 162, 139, 0.15)",
               }}
             >
               © 2025 introflo.io. All rights reserved.
@@ -724,7 +724,7 @@ export default function Home() {
               background: "white",
               padding: "32px",
               borderRadius: "20px",
-              boxShadow: "0 8px 24px rgba(255, 127, 101, 0.15)",
+              boxShadow: "0 8px 24px rgba(217, 162, 139, 0.15)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -753,7 +753,7 @@ export default function Home() {
               Scan to view on mobile
               {qrTarget && (
                 <div style={{ marginTop: "6px", fontSize: "11px", color: "#9ca3af" }}>
-                  URL: <a href={qrTarget} style={{ color: "#ff7f65", textDecoration: "none" }}>{qrTarget}</a>
+                  URL: <a href={qrTarget} style={{ color: "var(--accent-warm-primary)", textDecoration: "none" }}>{qrTarget}</a>
                 </div>
               )}
             </div>

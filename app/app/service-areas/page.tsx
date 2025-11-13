@@ -16,7 +16,7 @@ export default async function ServiceAreasPage() {
   const user = await getCurrentUser();
   let facilityId: string | undefined = undefined;
   if (user?.org_id) {
-    const supabase = createClient();
+  const supabase = await createClient();
     const { data: facilities } = await supabase
       .from("facilities")
       .select("id")

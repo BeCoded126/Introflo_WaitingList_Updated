@@ -4,6 +4,18 @@
   --brand-2: #44bc0c; /* teal */
   --brand-3: #144212; /* dark navy */
   --bg: #f5f4f6;
+  /* Neutral Core (already applied in waitlist page inline; provided here for future consolidation) */
+  --neutral-cloud-white: #f8f9fa;
+  --neutral-cool-mist-gray: #e5e7eb;
+  --neutral-stone: #c9ccd1;
+  --neutral-graphite-text: #3a3a3d;
+  --neutral-deep-slate: #2b2d31;
+  --neutral-blue-gray: #8893ad;
+  --neutral-sage-gray: #aeb7ad;
+  --neutral-warm-greige: #b9b3aa;
+  /* Warm Accent System */
+  --accent-warm-primary: #f08a75; /* Muted Coral */
+  --accent-warm-secondary: #d9a28b; /* Warm Clay */
 }
 
 * {

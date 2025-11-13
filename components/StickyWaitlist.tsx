@@ -54,8 +54,8 @@ export default function StickyWaitlist() {
         padding: "12px 16px",
         borderRadius: isFloating ? 0 : "14px",
         boxShadow: isFloating
-          ? "0 2px 16px rgba(0,0,0,0.08)"
-          : "0 2px 8px rgba(0,0,0,0.06)",
+          ? "0 2px 16px rgba(217, 162, 139, 0.12)"
+          : "0 2px 8px rgba(217, 162, 139, 0.08)",
         border: "1px solid #C9CCD1",
         borderBottom: isFloating ? "1px solid #C9CCD1" : undefined,
         transition: "transform 0.25s, background 0.25s",
@@ -101,11 +101,13 @@ export default function StickyWaitlist() {
         }
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-2px)";
+          e.currentTarget.style.background = "#E27562";
           e.currentTarget.style.boxShadow =
-            "0 6px 16px rgba(240,138,117,0.32)";
+            "0 6px 16px rgba(217, 162, 139, 0.35)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.background = "#F08A75";
           e.currentTarget.style.boxShadow =
             "0 4px 12px rgba(240,138,117,0.25)";
         }}

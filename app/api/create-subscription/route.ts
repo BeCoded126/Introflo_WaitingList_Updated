@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const supabase = createClient();
+  const supabase = await createClient();
 
     // Get organization details
     const { data: org } = await supabase

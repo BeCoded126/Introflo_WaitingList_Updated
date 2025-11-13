@@ -30,7 +30,8 @@ export const createClient = cache(async () => {
           cookieStore.set(name, value, COOKIE_OPTIONS);
         },
         remove(name: string) {
-          cookieStore.delete(name, COOKIE_OPTIONS);
+          // delete signature only accepts key; options not supported
+          cookieStore.delete(name);
         },
       },
     }

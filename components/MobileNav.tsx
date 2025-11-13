@@ -129,7 +129,7 @@ export default function MobileNav({
             padding: 12px 12px;
             background: white;
             border: 2px solid #e5e7eb;
-            color: #6b7280;
+            color: var(--neutral-graphite-text);
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
@@ -140,25 +140,25 @@ export default function MobileNav({
 
           .mobile-nav-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 127, 101, 0.2);
-            border-color: #ff7f65;
+            box-shadow: var(--shadow-warm);
+            border-color: var(--accent-warm-primary);
           }
 
           .mobile-nav-btn.active {
-            background: linear-gradient(135deg, #ff7f65, #ffa590);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 4px 12px rgba(255, 127, 101, 0.3);
+            background: var(--accent-warm-primary);
+            color: #fff;
+            border-color: var(--accent-warm-primary);
+            box-shadow: var(--shadow-warm-hover);
           }
 
           .mobile-nav-btn svg {
             width: 24px;
-            height: 24px;
-            stroke-width: 2;
+            transition: color .2s;
           }
 
           .mobile-nav-btn.active svg {
             stroke-width: 2.5;
+            color: #fff;
           }
 
           .mobile-nav-btn span {
@@ -170,8 +170,8 @@ export default function MobileNav({
             position: absolute;
             top: 4px;
             right: 20%;
-            background: #ff655c;
-            color: white;
+            background: var(--accent-warm-secondary);
+            color: var(--neutral-deep-slate);
             border-radius: 10px;
             padding: 2px 6px;
             font-size: 10px;
@@ -181,8 +181,8 @@ export default function MobileNav({
           }
 
           .mobile-nav-btn.active .badge-count {
-            background: white;
-            color: #ff7f65;
+            background: #fff;
+            color: var(--accent-warm-primary);
           }
         }
       `}</style>
