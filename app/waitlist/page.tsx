@@ -148,7 +148,7 @@ export default function Waitlist() {
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
-            padding: "12px 36px",
+            padding: "20px 36px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -157,7 +157,7 @@ export default function Waitlist() {
         >
           <span
             style={{
-              fontSize: "28px",
+              fontSize: "30px",
               fontWeight: 800,
               color: "#2B2D31", // Deep Slate for brand wordmark
               letterSpacing: "0.2px",
@@ -197,7 +197,7 @@ export default function Waitlist() {
                 wordBreak: "break-word",
               }}
             >
-              We Help Your Private Practice Connect Faster and Smarter.
+              We Help Your Private Practice Connect <em style={{ fontStyle: "italic" }}>Faster and Smarter.</em>
             </h1>
 
             {/* Sub-header: moved fragment */}
@@ -219,45 +219,34 @@ export default function Waitlist() {
             </h3>
 
             {/* Replaced intro copy with three bullets plus small SVG icons */}
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, marginBottom: "16px" }}>
-              <li style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <path d="M3 12h14" stroke="#8893AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M14 5l7 7-7 7" stroke="#8893AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <div style={{ fontSize: "18px", color: "#374151" }}>Swipe</div>
+            <ol aria-label="intro-steps" style={{ listStyle: "none", padding: 0, margin: 0, marginBottom: "16px" }}>
+              <li style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                <span style={{ width: 34, height: 34, borderRadius: 8, background: "#F08A75", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "18px", fontWeight: 800, flex: "0 0 auto" }}>1</span>
+                <div style={{ fontSize: "20px", color: "#374151", textAlign: "left", fontWeight: 800, textTransform: "uppercase" }}>Swipe</div>
               </li>
 
-              <li style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <path d="M12 5v14" stroke="#8893AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M5 12h14" stroke="#8893AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <div style={{ fontSize: "18px", color: "#374151" }}>Match</div>
+              <li style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                <span style={{ width: 34, height: 34, borderRadius: 8, background: "#F08A75", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "18px", fontWeight: 800, flex: "0 0 auto" }}>2</span>
+                <div style={{ fontSize: "20px", color: "#374151", textAlign: "left", fontWeight: 800, textTransform: "uppercase" }}>Match</div>
               </li>
 
-              <li style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <circle cx="6" cy="6" r="2" stroke="#8893AD" strokeWidth="1.6" />
-                  <circle cx="18" cy="6" r="2" stroke="#8893AD" strokeWidth="1.6" />
-                  <circle cx="12" cy="16" r="2" stroke="#8893AD" strokeWidth="1.6" />
-                  <path d="M7.5 7.5l4.5 6" stroke="#8893AD" strokeWidth="1.6" strokeLinecap="round" />
-                  <path d="M16.5 7.5l-4.5 6" stroke="#8893AD" strokeWidth="1.6" strokeLinecap="round" />
-                </svg>
-                <div style={{ fontSize: "18px", color: "#374151" }}>Build network effortlessly</div>
+              <li style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                <span style={{ width: 34, height: 34, borderRadius: 8, background: "#F08A75", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "18px", fontWeight: 800, flex: "0 0 auto" }}>3</span>
+                <div style={{ fontSize: "20px", color: "#374151", textAlign: "left", fontWeight: 800, textTransform: "uppercase" }}>BUILD YOUR CARE NETWORK EFFORTLESSLY</div>
               </li>
-            </ul>
+            </ol>
 
             {/* legacy Problem→Outcome bullets removed per request */}
             {/* Waitlist input field (inline, non-sticky) */}
             {mounted && (
-              <div style={{ marginTop: "18px" }}>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <div style={{ display: "flex", gap: "12px", maxWidth: "420px", width: "100%" }}>
+              <div style={{ marginTop: "28px" }}>
+                <h3 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "16px", color: "#2B2D31" }}>Be One of the First to Gain Access</h3>
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  <div style={{ display: "flex", gap: "12px", maxWidth: "504px", width: "100%" }}>
                     <input
                       type="email"
-                      placeholder="Join waitlist"
-                      aria-label="Join waitlist"
+                      placeholder="Type Email Here"
+                      aria-label="Type Email Here"
                       style={{
                         flex: 1,
                         padding: "14px 18px",
@@ -287,7 +276,7 @@ export default function Waitlist() {
                       }}
                       onClick={() => window.open("https://tally.so/r/n0pRk9", "_blank", "noopener,noreferrer")}
                     >
-                      Join
+                      Join Waitlist
                     </button>
                   </div>
                 </div>
@@ -453,7 +442,7 @@ export default function Waitlist() {
         </div>
       </section>
 
-      <section style={{ padding: "100px 24px", background: "#FFFFFF" }}>
+      <section style={{ padding: "50px 24px", background: "#FFFFFF" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "60px" }}>
             <h2 style={{ fontSize: "42px", fontWeight: 800, marginBottom: "16px", color: "#2B2D31" }}>Why Choose introflo.io?</h2>
@@ -480,9 +469,9 @@ export default function Waitlist() {
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr", gap: "80px", alignItems: "center" }}>
           <div style={{ gridColumn: "1 / span 2", textAlign: "center" }}>
             <h3 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "18px", color: "#2B2D31" }}>Be One of the First to Gain Access</h3>
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px", maxWidth: "420px", margin: "0 auto 32px", alignItems: "center" }}>
-              <input type="email" placeholder="Join waitlist" style={{ flex: 1, padding: "14px 18px", fontSize: "16px", borderRadius: "10px", border: "1px solid #C9CCD1", outline: "none", background: "#FFFFFF", color: "#3A3A3D", fontWeight: 500, boxShadow: "0 2px 6px rgba(0,0,0,0.04)", transition: "border 0.2s" }} />
-              <button style={{ padding: "14px 28px", fontSize: "16px", borderRadius: "10px", fontWeight: 700, background: "#F08A75", color: "#FFFFFF", border: "1px solid #F08A75", cursor: "pointer", boxShadow: "0 4px 12px rgba(240,138,117,0.25)", transition: "all 0.2s" }} onClick={() => window.open("https://tally.so/r/n0pRk9", "_blank", "noopener,noreferrer")} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 6px 16px rgba(240,138,117,0.32)"; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(240,138,117,0.25)"; }}>Join</button>
+            <div style={{ display: "flex", justifyContent: "center", gap: "12px", maxWidth: "504px", margin: "0 auto 32px", alignItems: "center" }}>
+              <input type="email" placeholder="Type Email Here" aria-label="Type Email Here" style={{ flex: 1, padding: "14px 18px", fontSize: "16px", borderRadius: "10px", border: "1px solid #C9CCD1", outline: "none", background: "#FFFFFF", color: "#3A3A3D", fontWeight: 500, boxShadow: "0 2px 6px rgba(0,0,0,0.04)", transition: "border 0.2s" }} />
+              <button style={{ padding: "14px 28px", fontSize: "16px", borderRadius: "10px", fontWeight: 700, background: "#F08A75", color: "#FFFFFF", border: "1px solid #F08A75", cursor: "pointer", boxShadow: "0 4px 12px rgba(240,138,117,0.25)", transition: "all 0.2s" }} onClick={() => window.open("https://tally.so/r/n0pRk9", "_blank", "noopener,noreferrer")} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 6px 16px rgba(240,138,117,0.32)"; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(240,138,117,0.25)"; }}>Join Waitlist</button>
             </div>
             <div style={{ fontSize: "14px", color: "#8893AD", paddingTop: "32px", borderTop: "1px solid #C9CCD1" }}>© 2025 introflo.io. All rights reserved.</div>
           </div>
