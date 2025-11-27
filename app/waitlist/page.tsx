@@ -74,10 +74,9 @@ export default function Waitlist() {
   // Begin phone swap animation only after mount (prevents early client/server divergence)
   useEffect(() => {
     if (!mounted) return;
-    // cycle among 0 (left phone), 1 (right phone), 2 (desktop) every 8s
     const interval = setInterval(() => {
-      setActivePhone((prev) => (prev + 1) % 3);
-    }, 8000);
+      setActivePhone((prev) => (prev === 0 ? 1 : 0));
+    }, 4000);
     return () => clearInterval(interval);
   }, [mounted]);
 
@@ -325,433 +324,38 @@ export default function Waitlist() {
           {mounted && (
             <div
               style={{
-                // fixed width for right column so left text never shifts
-                width: 620,
                 display: "flex",
+                gap: "30px",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              {/* When activePhone === 2 we show the desktop mock that occupies the same space */}
-              {activePhone === 2 ? (
+              {/* Phone 1 - Swipe Deck */}
+              <div
+                style={{
+                  width: "280px",
+                  height: "580px",
+                  background: "#E5E7EB", // Cool Mist Gray device frame
+                  borderRadius: "40px",
+                  padding: "12px",
+                  boxShadow:
+                    activePhone === 0
+                      ? "0 30px 60px rgba(0,0,0,0.12)"
+                      : "0 20px 40px rgba(0,0,0,0.12)",
+                  transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
+                  transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              >
                 <div
                   style={{
-                    width: "620px",
-                    height: "420px",
-                    background: "#E5E7EB",
-                    borderRadius: "18px",
-                    padding: "20px",
-                    boxShadow:
-                      "0 30px 60px rgba(0,0,0,0.12)",
-                    transform: "scale(1.03)",
-                    transition: "transform 600ms",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: "100%",
+                    height: "100%",
+                    background: "#FFFFFF",
+                    borderRadius: "32px",
+                    overflow: "hidden",
+                    position: "relative",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "#FFFFFF",
-                      borderRadius: "12px",
-                      padding: "24px",
-                      boxSizing: "border-box",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "16px",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <div style={{ width: 12, height: 12, borderRadius: 6, background: "#F87171" }} />
-                      <div style={{ width: 12, height: 12, borderRadius: 6, background: "#FBBF24" }} />
-                      <div style={{ width: 12, height: 12, borderRadius: 6, background: "#34D399" }} />
-                    </div>
-
-                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      {/* Desktop screen area: contains animated filter UI */}
-                      <div
-                        style={{
-                          width: "92%",
-                          height: "78%",
-                          background: "#F3F4F6",
-                          borderRadius: 8,
-                          padding: 18,
-                          boxSizing: "border-box",
-                          overflow: "hidden",
-                          position: "relative",
-                        }}
-                      >
-                        <div style={{ display: "flex", gap: 16 }}>
-                          <div style={{ width: 220 }}>
-                            <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 8 }}>Filters</div>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                              <div style={{ height: 28, borderRadius: 8, background: "#FFFFFF", padding: 8, boxSizing: "border-box", boxShadow: "inset 0 1px 0 rgba(0,0,0,0.03)" }}>
-                                <div className="filter-pill" style={{ width: "40%", height: 12, background: "#8893AD", borderRadius: 6 }} />
-                              </div>
-                              <div style={{ height: 28, borderRadius: 8, background: "#FFFFFF", padding: 8, boxSizing: "border-box" }}>
-                                <div className="filter-pill" style={{ width: "60%", height: 12, background: "#8893AD", borderRadius: 6 }} />
-                              </div>
-                              <div style={{ height: 28, borderRadius: 8, background: "#FFFFFF", padding: 8, boxSizing: "border-box" }}>
-                                <div className="filter-pill" style={{ width: "30%", height: 12, background: "#8893AD", borderRadius: 6 }} />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div style={{ flex: 1, borderRadius: 8, background: "#FFFFFF", padding: 12, boxSizing: "border-box" }}>
-                            <div style={{ height: 220, borderRadius: 6, background: "linear-gradient(180deg,#f8fafc,#eef2ff)", overflow: "hidden", position: "relative" }}>
-                              <div className="desktop-animation" style={{ position: "absolute", inset: 12 }}>
-                                {/* Rows that simulate results; animated highlight to show filter being applied */}
-                                {[0, 1, 2, 3, 4].map((r) => (
-                                  <div key={r} style={{ height: 28, borderRadius: 6, marginBottom: 8, background: "#ffffff", display: "flex", alignItems: "center", padding: "6px 10px", boxSizing: "border-box" }}>
-                                    <div style={{ width: 56, height: 18, background: "#E6EEF8", borderRadius: 4, marginRight: 12 }} />
-                                    <div style={{ flex: 1, height: 12, background: "#F3F4F6", borderRadius: 6 }} />
-                                  </div>
-                                ))}
-                                <style>{`
-                                  @keyframes filterPulse { 0% { transform: translateX(-100%); opacity: 0 } 10% { opacity: 1 } 50% { transform: translateX(0%); opacity: 1 } 100% { transform: translateX(100%); opacity: 0 } }
-                                  .desktop-animation::after { content: ''; position: absolute; left: -40%; top: 0; width: 40%; height: 100%; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0)); transform: translateX(-100%); animation: filterPulse 3.2s ease-in-out infinite; }
-                                  .filter-pill { animation: pillFill 3.2s ease-in-out infinite; }
-                                  @keyframes pillFill { 0% { transform: scaleX(0.6); } 50% { transform: scaleX(1); } 100% { transform: scaleX(0.6); } }
-                                `}</style>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                // show the two iPhone mockups side-by-side (same layout as before)
-                <div style={{ display: "flex", gap: 30 }}>
-                  {/* Phone 1 - Swipe Deck */}
-                  <div
-                    style={{
-                      width: "280px",
-                      height: "580px",
-                      background: "#E5E7EB", // Cool Mist Gray device frame
-                      borderRadius: "40px",
-                      padding: "12px",
-                      boxShadow:
-                        activePhone === 0
-                          ? "0 30px 60px rgba(0,0,0,0.12)"
-                          : "0 20px 40px rgba(0,0,0,0.12)",
-                      transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
-                      transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        background: "#FFFFFF",
-                        borderRadius: "32px",
-                        overflow: "hidden",
-                        position: "relative",
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: "16px 20px 8px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          color: "#3A3A3D",
-                        }}
-                      >
-                        <span>9:41</span>
-                        <span>●●●●</span>
-                      </div>
-
-                      <div style={{ padding: "16px 20px", textAlign: "center" }}>
-                        <div
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: 800,
-                            marginTop: "8px",
-                            color: "#2B2D31",
-                            letterSpacing: "0.3px",
-                          }}
-                        >
-                          introflo.io
-                        </div>
-                      </div>
-
-                      <div style={{ padding: "0 20px" }}>
-                        <div
-                          style={{
-                            background: "#FFFFFF",
-                            borderRadius: "20px",
-                            overflow: "hidden",
-                            boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-                            transform: isSwiping
-                              ? swipeDir === "left"
-                                ? "translateX(-420px) rotate(-15deg) scale(0.95)"
-                                : "translateX(420px) rotate(15deg) scale(0.95)"
-                              : "translateX(0) rotate(0) scale(1)",
-                            opacity: isSwiping ? 0 : 1,
-                            transition:
-                              "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms linear",
-                          }}
-                        >
-                          <div
-                            style={{
-                              height: "220px",
-                              background: "#E5E7EB",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color: "#2B2D31",
-                              fontSize: "48px",
-                            }}
-                          >
-                            <img
-                              src={cards[0].image}
-                              alt={cards[0].title}
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                              }}
-                            />
-                          </div>
-                          <div style={{ padding: "16px" }}>
-                            <div
-                              style={{
-                                fontSize: "16px",
-                                fontWeight: 700,
-                                marginBottom: "6px",
-                              }}
-                            >
-                              Tranquility Behavioral
-                            </div>
-                            <div
-                              style={{
-                                fontSize: "12px",
-                                color: "#6b7280",
-                                marginBottom: "8px",
-                              }}
-                            >
-                              📍 Coral Springs, FL
-                            </div>
-                            <div style={{ fontSize: "10px", color: "#9ca3af" }}>
-                              Therapy • IOP • Counseling
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "16px",
-                            justifyContent: "center",
-                            marginTop: "20px",
-                          }}
-                        >
-                          <div
-                            aria-hidden="true"
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                              background: "#FFFFFF",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: "24px",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                              userSelect: "none",
-                            }}
-                          >
-                            ✕
-                          </div>
-                          <div
-                            aria-hidden="true"
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                              background: "#8893AD",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: "24px",
-                              color: "#FFFFFF",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                              userSelect: "none",
-                            }}
-                          >
-                            ♥
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Phone 2 - Chat Mock */}
-                  <div
-                    style={{
-                      width: "280px",
-                      height: "580px",
-                      background: "#E5E7EB",
-                      borderRadius: "40px",
-                      padding: "12px",
-                      boxShadow:
-                        activePhone === 1
-                          ? "0 30px 60px rgba(0,0,0,0.12)"
-                          : "0 20px 40px rgba(0,0,0,0.12)",
-                      transform: activePhone === 1 ? "scale(1.05)" : "scale(1)",
-                      transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        background: "#FFFFFF",
-                        borderRadius: "32px",
-                        overflow: "hidden",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: "16px 20px 8px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          color: "#3A3A3D",
-                        }}
-                      >
-                        <span>9:41</span>
-                        <span>●●●●</span>
-                      </div>
-
-                      <div
-                        style={{
-                          padding: "12px 20px",
-                          background: "#8893AD",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "12px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            borderRadius: "50%",
-                            overflow: "hidden",
-                            background: "white",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                          <div style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF" }}>
-                            Tranquility Behavioral
-                          </div>
-                          <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>
-                            Online
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        style={{
-                          flex: 1,
-                          padding: "16px",
-                          background: "#F8F9FA",
-                          overflow: "hidden",
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        {(mounted
-                          ? chatMessages.slice(0, chatStep)
-                          : chatMessages.slice(0, 1)
-                        ).map((m) => (
-                          <div
-                            key={m.id}
-                            style={{
-                              marginBottom: "12px",
-                              display: "flex",
-                              justifyContent: m.outgoing
-                                ? "flex-end"
-                                : "flex-start",
-                              opacity: 0,
-                              animation: "fadeIn 0.5s forwards",
-                            }}
-                          >
-                            <div>
-                              <div
-                                style={{
-                                  maxWidth: "80%",
-                                  background: m.outgoing ? "#8893AD" : "#FFFFFF",
-                                  color: m.outgoing ? "#FFFFFF" : "#3A3A3D",
-                                  padding: "10px 14px",
-                                  borderRadius: m.outgoing
-                                    ? "16px 16px 4px 16px"
-                                    : "16px 16px 16px 4px",
-                                  fontSize: "12px",
-                                  lineHeight: 1.5,
-                                  boxShadow: m.outgoing
-                                    ? "0 4px 12px rgba(0,0,0,0.10)"
-                                    : "0 2px 8px rgba(0,0,0,0.05)",
-                                  transition: "transform 0.3s",
-                                }}
-                              >
-                                {m.text}
-                              </div>
-                              <div
-                                style={{
-                                  fontSize: "10px",
-                                  color: "#A0A4AB",
-                                  marginTop: "4px",
-                                  textAlign: m.outgoing ? "right" : "left",
-                                }}
-                              >
-                                {m.time}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                        <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }`}</style>
-                      </div>
-
-                      <div
-                        style={{
-                          padding: "12px 16px",
-                          borderTop: "1px solid #C9CCD1",
-                          background: "#FFFFFF",
-                        }}
-                      >
-                        <div
-                          style={{
-                            background: "#E5E7EB",
-                            borderRadius: "20px",
-                            padding: "10px 16px",
-                            fontSize: "12px",
-                            color: "#8893AD",
-                          }}
-                        >
-                          Type a message...
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
                   <div
                     style={{
                       padding: "16px 20px 8px",
