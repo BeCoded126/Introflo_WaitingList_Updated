@@ -13,10 +13,30 @@ export default function Home() {
 
   // Define a simple scripted chat sequence for animation
   const chatMessages = [
-    { id: 1, text: "Hi! Do you accept Aetna?", time: "2:30 PM", outgoing: false },
-    { id: 2, text: "Yes! We accept most major insurances including Aetna.", time: "2:31 PM", outgoing: true },
-    { id: 3, text: "Great. Do you have any openings this week?", time: "2:31 PM", outgoing: false },
-    { id: 4, text: "We can take new patients starting Thursday.", time: "2:32 PM", outgoing: true },
+    {
+      id: 1,
+      text: "Hi! Do you accept Aetna?",
+      time: "2:30 PM",
+      outgoing: false,
+    },
+    {
+      id: 2,
+      text: "Yes! We accept most major insurances including Aetna.",
+      time: "2:31 PM",
+      outgoing: true,
+    },
+    {
+      id: 3,
+      text: "Great. Do you have any openings this week?",
+      time: "2:31 PM",
+      outgoing: false,
+    },
+    {
+      id: 4,
+      text: "We can take new patients starting Thursday.",
+      time: "2:32 PM",
+      outgoing: true,
+    },
   ];
 
   useEffect(() => {
@@ -43,16 +63,17 @@ export default function Home() {
       try {
         // Prefer a configured public URL when on localhost for mobile scanning
         const configured = process.env.NEXT_PUBLIC_PUBLIC_URL;
-        const url = typeof window !== 'undefined'
-          ? (window.location.hostname === 'localhost' && configured)
-            ? configured
-            : window.location.origin
-          : configured || 'http://localhost:3000';
+        const url =
+          typeof window !== "undefined"
+            ? window.location.hostname === "localhost" && configured
+              ? configured
+              : window.location.origin
+            : configured || "http://localhost:3000";
         setQrTarget(url);
         const qr = await QRCode.toDataURL(url, { width: 180, margin: 1 });
         setQrCode(qr);
       } catch (err) {
-        console.error('QR generation failed:', err);
+        console.error("QR generation failed:", err);
       }
     };
     generateQR();
@@ -119,7 +140,8 @@ export default function Home() {
               e.currentTarget.style.background = "var(--accent-warm-primary)";
               e.currentTarget.style.color = "white";
               e.currentTarget.style.borderColor = "transparent";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(217, 162, 139, 0.2)";
+              e.currentTarget.style.boxShadow =
+                "0 4px 12px rgba(217, 162, 139, 0.2)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
@@ -173,7 +195,8 @@ export default function Home() {
                 marginBottom: "40px",
               }}
             >
-              Connect with verified facilities, match instantly, chat securely, and manage referrals—all in one streamlined workspace.
+              Connect with verified facilities, match instantly, chat securely,
+              and manage referrals—all in one streamlined workspace.
             </p>
             <div style={{ display: "flex", gap: "16px" }}>
               <Link
@@ -193,11 +216,13 @@ export default function Home() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 6px 20px rgba(217, 162, 139, 0.15)";
+                  e.currentTarget.style.boxShadow =
+                    "0 6px 20px rgba(217, 162, 139, 0.15)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 4px 14px rgba(217, 162, 139, 0.15)";
+                  e.currentTarget.style.boxShadow =
+                    "0 4px 14px rgba(217, 162, 139, 0.15)";
                 }}
               >
                 Get Started
@@ -245,9 +270,10 @@ export default function Home() {
                 background: "#1f2937",
                 borderRadius: "40px",
                 padding: "12px",
-                boxShadow: activePhone === 0 
-                  ? "0 30px 60px rgba(139, 92, 246, 0.4)" 
-                  : "0 20px 40px rgba(0,0,0,0.2)",
+                boxShadow:
+                  activePhone === 0
+                    ? "0 30px 60px rgba(139, 92, 246, 0.4)"
+                    : "0 20px 40px rgba(0,0,0,0.2)",
                 transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
                 transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
@@ -256,7 +282,8 @@ export default function Home() {
                 style={{
                   width: "100%",
                   height: "100%",
-                  background: "linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%)",
+                  background:
+                    "linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%)",
                   borderRadius: "32px",
                   overflow: "hidden",
                   position: "relative",
@@ -410,9 +437,10 @@ export default function Home() {
                 background: "#1f2937",
                 borderRadius: "40px",
                 padding: "12px",
-                boxShadow: activePhone === 1
-                  ? "0 30px 60px rgba(217, 162, 139, 0.15)"
-                  : "0 20px 40px rgba(0,0,0,0.2)",
+                boxShadow:
+                  activePhone === 1
+                    ? "0 30px 60px rgba(217, 162, 139, 0.15)"
+                    : "0 20px 40px rgba(0,0,0,0.2)",
                 transform: activePhone === 1 ? "scale(1.05)" : "scale(1)",
                 transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
@@ -468,10 +496,21 @@ export default function Home() {
                     🏥
                   </div>
                   <div>
-                    <div style={{ fontSize: "14px", fontWeight: 700, color: "white" }}>
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 700,
+                        color: "white",
+                      }}
+                    >
                       The SD Mindset
                     </div>
-                    <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>
+                    <div
+                      style={{
+                        fontSize: "11px",
+                        color: "rgba(255, 255, 255, 0.9)",
+                      }}
+                    >
                       Online
                     </div>
                   </div>
@@ -717,7 +756,7 @@ export default function Home() {
               © 2025 introflo.io. All rights reserved.
             </div>
           </div>
-          
+
           {/* QR Code */}
           <div
             style={{
@@ -752,8 +791,23 @@ export default function Home() {
             >
               Scan to view on mobile
               {qrTarget && (
-                <div style={{ marginTop: "6px", fontSize: "11px", color: "#9ca3af" }}>
-                  URL: <a href={qrTarget} style={{ color: "var(--accent-warm-primary)", textDecoration: "none" }}>{qrTarget}</a>
+                <div
+                  style={{
+                    marginTop: "6px",
+                    fontSize: "11px",
+                    color: "#9ca3af",
+                  }}
+                >
+                  URL:{" "}
+                  <a
+                    href={qrTarget}
+                    style={{
+                      color: "var(--accent-warm-primary)",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {qrTarget}
+                  </a>
                 </div>
               )}
             </div>

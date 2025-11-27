@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-  const supabase = await createClient();
+    const supabase = await createClient();
 
     // Get organization details
     const { data: org } = await supabase

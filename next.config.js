@@ -6,7 +6,7 @@ const nextConfig = {
   async redirects() {
     return [
       // Redirect root to waitlist page
-      { source: '/', destination: '/waitlist', permanent: false },
+      { source: "/", destination: "/waitlist", permanent: false },
     ];
   },
 };

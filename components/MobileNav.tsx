@@ -153,7 +153,7 @@ export default function MobileNav({
 
           .mobile-nav-btn svg {
             width: 24px;
-            transition: color .2s;
+            transition: color 0.2s;
           }
 
           .mobile-nav-btn.active svg {

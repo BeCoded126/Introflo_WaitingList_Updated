@@ -347,7 +347,8 @@ export default function AppDashboard() {
   const [matchCount, setMatchCount] = useState(0);
   const [showMatchScreen, setShowMatchScreen] = useState(false);
   const [pendingMatch, setPendingMatch] = useState<Facility | null>(null);
-  const [conversations, setConversations] = useState<Conversation[]>(MOCK_CONVERSATIONS);
+  const [conversations, setConversations] =
+    useState<Conversation[]>(MOCK_CONVERSATIONS);
   const createdConversationsRef = React.useRef<Set<string>>(new Set());
 
   const handleConversationSelect = (conversationId: string) => {
@@ -372,11 +373,11 @@ export default function AppDashboard() {
       if (next >= 3) {
         setPendingMatch(facility);
         setShowMatchScreen(true);
-        
+
         // Check if conversation already created for this facility
         if (!createdConversationsRef.current.has(facility.id)) {
           createdConversationsRef.current.add(facility.id);
-          
+
           // Create new conversation
           const newConversation: Conversation = {
             id: `c${Date.now()}`,
@@ -388,11 +389,11 @@ export default function AppDashboard() {
             matchedAt: new Date(),
             unreadCount: 0,
           };
-          
+
           // Add to conversations list at the top
-          setConversations(prev => [newConversation, ...prev]);
+          setConversations((prev) => [newConversation, ...prev]);
         }
-        
+
         return 0; // reset count
       }
       return next;
@@ -468,45 +469,64 @@ export default function AppDashboard() {
     <div className="app-dashboard">
       {/* Match Screen Modal */}
       {showMatchScreen && pendingMatch && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(135deg,#7c3aed,#059669,#d97706)',
-          color: 'white',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 10000,
-          padding: 40,
-        }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "linear-gradient(135deg,#7c3aed,#059669,#d97706)",
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10000,
+            padding: 40,
+          }}
+        >
           <div style={{ fontSize: 64, marginBottom: 20 }}>🎉</div>
-          <h2 style={{ fontSize: 40, fontWeight: 700, marginBottom: 16, textAlign: 'center' }}>
-            You matched with <span style={{ color: '#ffe082' }}>{pendingMatch.name}</span>!
+          <h2
+            style={{
+              fontSize: 40,
+              fontWeight: 700,
+              marginBottom: 16,
+              textAlign: "center",
+            }}
+          >
+            You matched with{" "}
+            <span style={{ color: "#ffe082" }}>{pendingMatch.name}</span>!
           </h2>
-          <p style={{ fontSize: 18, opacity: 0.92, marginBottom: 32, textAlign: 'center' }}>
+          <p
+            style={{
+              fontSize: 18,
+              opacity: 0.92,
+              marginBottom: 32,
+              textAlign: "center",
+            }}
+          >
             A new conversation has been started.
           </p>
           <button
             style={{
-              background: 'white',
-              color: '#ff655c',
-              border: 'none',
+              background: "white",
+              color: "#ff655c",
+              border: "none",
               fontSize: 20,
               fontWeight: 700,
               borderRadius: 30,
-              padding: '16px 48px',
-              cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.20)',
+              padding: "16px 48px",
+              cursor: "pointer",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.20)",
             }}
             onClick={() => {
               setShowMatchScreen(false);
               setPendingMatch(null);
             }}
-          >Continue Swiping</button>
+          >
+            Continue Swiping
+          </button>
         </div>
       )}
 
