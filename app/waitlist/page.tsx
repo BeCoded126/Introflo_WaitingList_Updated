@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
+import DesktopMock from "@/components/DesktopMock";
 // Dynamically import sticky waitlist bar (client-only, no SSR) to prevent hydration drift
 const StickyWaitlist = dynamic(() => import("@/components/StickyWaitlist"), {
   ssr: false,
@@ -15,6 +16,7 @@ export default function Waitlist() {
   const [deckIndex, setDeckIndex] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const [swipeDir, setSwipeDir] = useState<string | null>(null);
+  const [showDesktopMock, setShowDesktopMock] = useState(false);
 
   // Device alternation: show desktop every other cycle
   const showDesktop = activePhone === 1;
@@ -78,6 +80,15 @@ export default function Waitlist() {
       setActivePhone((prev) => (prev === 0 ? 1 : 0));
     }, 4000);
     return () => clearInterval(interval);
+  }, [mounted]);
+
+  // Carousel: alternate between iPhones (state 0) and DesktopMock (state 1) every 8s
+  useEffect(() => {
+    if (!mounted) return;
+    const carousel = setInterval(() => {
+      setShowDesktopMock((s) => !s);
+    }, 8000);
+    return () => clearInterval(carousel);
   }, [mounted]);
 
   const handleSwipe = (dir: "left" | "right") => {
@@ -320,335 +331,110 @@ export default function Waitlist() {
             )}
           </div>
 
-          {/* Two iPhone Devices Side by Side (client-only to avoid hydration drift) */}
+          {/* Carousel container: renders phones (state 0) or desktop mock (state 1) */}
           {mounted && (
-            <div
-              style={{
-                display: "flex",
-                gap: "30px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {/* Phone 1 - Swipe Deck */}
+            <div style={{ position: "relative", width: "auto", minHeight: "580px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {/* Phones panel (state 0) */}
               <div
                 style={{
-                  width: "280px",
-                  height: "580px",
-                  background: "#E5E7EB", // Cool Mist Gray device frame
-                  borderRadius: "40px",
-                  padding: "12px",
-                  boxShadow:
-                    activePhone === 0
-                      ? "0 30px 60px rgba(0,0,0,0.12)"
-                      : "0 20px 40px rgba(0,0,0,0.12)",
-                  transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
-                  transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+                  display: showDesktopMock ? "none" : "flex",
+                  gap: "30px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "opacity 800ms ease",
+                  opacity: showDesktopMock ? 0 : 1,
+                  width: "100%",
                 }}
               >
+                {/* Phone 1 - Swipe Deck */}
                 <div
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    background: "#FFFFFF",
-                    borderRadius: "32px",
-                    overflow: "hidden",
-                    position: "relative",
+                    width: "280px",
+                    height: "580px",
+                    background: "#E5E7EB",
+                    borderRadius: "40px",
+                    padding: "12px",
+                    boxShadow:
+                      activePhone === 0
+                        ? "0 30px 60px rgba(0,0,0,0.12)"
+                        : "0 20px 40px rgba(0,0,0,0.12)",
+                    transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
+                    transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
                   }}
                 >
-                  <div
-                    style={{
-                      padding: "16px 20px 8px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      color: "#3A3A3D",
-                    }}
-                  >
-                    <span>9:41</span>
-                    <span>●●●●</span>
-                  </div>
-
-                  <div style={{ padding: "16px 20px", textAlign: "center" }}>
-                    <div
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: 800,
-                        marginTop: "8px",
-                        color: "#2B2D31",
-                        letterSpacing: "0.3px",
-                      }}
-                    >
-                      introflo.io
+                  <div style={{ width: "100%", height: "100%", background: "#FFFFFF", borderRadius: "32px", overflow: "hidden", position: "relative" }}>
+                    <div style={{ padding: "16px 20px 8px", display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 600, color: "#3A3A3D" }}>
+                      <span>9:41</span>
+                      <span>●●●●</span>
                     </div>
-                  </div>
 
-                  <div style={{ padding: "0 20px" }}>
-                    <div
-                      style={{
-                        background: "#FFFFFF",
-                        borderRadius: "20px",
-                        overflow: "hidden",
-                        boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-                        transform: isSwiping
-                          ? swipeDir === "left"
-                            ? "translateX(-420px) rotate(-15deg) scale(0.95)"
-                            : "translateX(420px) rotate(15deg) scale(0.95)"
-                          : "translateX(0) rotate(0) scale(1)",
-                        opacity: isSwiping ? 0 : 1,
-                        transition:
-                          "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms linear",
-                      }}
-                    >
-                      <div
-                        style={{
-                          height: "220px",
-                          background: "#E5E7EB",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "#2B2D31",
-                          fontSize: "48px",
-                        }}
-                      >
-                        <img
-                          src={cards[0].image}
-                          alt={cards[0].title}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div style={{ padding: "16px" }}>
-                        <div
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 700,
-                            marginBottom: "6px",
-                          }}
-                        >
-                          Tranquility Behavioral
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            color: "#6b7280",
-                            marginBottom: "8px",
-                          }}
-                        >
-                          📍 Coral Springs, FL
-                        </div>
-                        <div style={{ fontSize: "10px", color: "#9ca3af" }}>
-                          Therapy • IOP • Counseling
-                        </div>
+                    <div style={{ padding: "16px 20px", textAlign: "center" }}>
+                      <div style={{ fontSize: "20px", fontWeight: 800, marginTop: "8px", color: "#2B2D31", letterSpacing: "0.3px" }}>
+                        introflo.io
                       </div>
                     </div>
 
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "16px",
-                          justifyContent: "center",
-                          marginTop: "20px",
-                        }}
-                      >
-                        <div
-                          aria-hidden="true"
-                          style={{
-                            width: "50px",
-                            height: "50px",
-                            borderRadius: "50%",
-                            background: "#FFFFFF",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: "24px",
-                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                            userSelect: "none",
-                          }}
-                        >
-                          ✕
+                    <div style={{ padding: "0 20px" }}>
+                      <div style={{ background: "#FFFFFF", borderRadius: "20px", overflow: "hidden", boxShadow: "0 8px 24px rgba(0,0,0,0.08)", transform: isSwiping ? (swipeDir === "left" ? "translateX(-420px) rotate(-15deg) scale(0.95)" : "translateX(420px) rotate(15deg) scale(0.95)") : "translateX(0) rotate(0) scale(1)", opacity: isSwiping ? 0 : 1, transition: "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms linear" }}>
+                        <div style={{ height: "220px", background: "#E5E7EB", display: "flex", alignItems: "center", justifyContent: "center", color: "#2B2D31", fontSize: "48px" }}>
+                          <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         </div>
-                        <div
-                          aria-hidden="true"
-                          style={{
-                            width: "50px",
-                            height: "50px",
-                            borderRadius: "50%",
-                            background: "#8893AD",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: "24px",
-                            color: "#FFFFFF",
-                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                            userSelect: "none",
-                          }}
-                        >
-                          ♥
+                        <div style={{ padding: "16px" }}>
+                          <div style={{ fontSize: "16px", fontWeight: 700, marginBottom: "6px" }}>Tranquility Behavioral</div>
+                          <div style={{ fontSize: "12px", color: "#6b7280", marginBottom: "8px" }}>📍 Coral Springs, FL</div>
+                          <div style={{ fontSize: "10px", color: "#9ca3af" }}>Therapy • IOP • Counseling</div>
                         </div>
                       </div>
+
+                      <div style={{ display: "flex", gap: "16px", justifyContent: "center", marginTop: "20px" }}>
+                        <div aria-hidden style={{ width: "50px", height: "50px", borderRadius: "50%", background: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", userSelect: "none" }}>✕</div>
+                        <div aria-hidden style={{ width: "50px", height: "50px", borderRadius: "50%", background: "#8893AD", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", color: "#FFFFFF", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", userSelect: "none" }}>♥</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phone 2 */}
+                <div style={{ width: "280px", height: "580px", background: "#E5E7EB", borderRadius: "40px", padding: "12px", boxShadow: activePhone === 1 ? "0 30px 60px rgba(0,0,0,0.12)" : "0 20px 40px rgba(0,0,0,0.12)", transform: activePhone === 1 ? "scale(1.05)" : "scale(1)", transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}>
+                  <div style={{ width: "100%", height: "100%", background: "#FFFFFF", borderRadius: "32px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                    <div style={{ padding: "16px 20px 8px", display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 600, color: "#3A3A3D" }}>
+                      <span>9:41</span>
+                      <span>●●●●</span>
+                    </div>
+
+                    <div style={{ padding: "12px 20px", background: "#8893AD", display: "flex", alignItems: "center", gap: "12px" }}>
+                      <div style={{ width: "40px", height: "40px", borderRadius: "50%", overflow: "hidden", background: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF" }}>Tranquility Behavioral</div>
+                        <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>Online</div>
+                      </div>
+                    </div>
+
+                    <div style={{ flex: 1, padding: "16px", background: "#F8F9FA", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                      {(mounted ? chatMessages.slice(0, chatStep) : chatMessages.slice(0, 1)).map((m) => (
+                        <div key={m.id} style={{ marginBottom: "12px", display: "flex", justifyContent: m.outgoing ? "flex-end" : "flex-start", opacity: 0, animation: "fadeIn 0.5s forwards" }}>
+                          <div>
+                            <div style={{ maxWidth: "80%", background: m.outgoing ? "#8893AD" : "#FFFFFF", color: m.outgoing ? "#FFFFFF" : "#3A3A3D", padding: "10px 14px", borderRadius: m.outgoing ? "16px 16px 4px 16px" : "16px 16px 16px 4px", fontSize: "12px", lineHeight: 1.5, boxShadow: m.outgoing ? "0 4px 12px rgba(0,0,0,0.10)" : "0 2px 8px rgba(0,0,0,0.05)", transition: "transform 0.3s" }}>{m.text}</div>
+                            <div style={{ fontSize: "10px", color: "#A0A4AB", marginTop: "4px", textAlign: m.outgoing ? "right" : "left" }}>{m.time}</div>
+                          </div>
+                        </div>
+                      ))}
+                      <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+                    </div>
+
+                    <div style={{ padding: "12px 16px", borderTop: "1px solid #C9CCD1", background: "#FFFFFF" }}>
+                      <div style={{ background: "#E5E7EB", borderRadius: "20px", padding: "10px 16px", fontSize: "12px", color: "#8893AD" }}>Type a message...</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div
-                style={{
-                  width: "280px",
-                  height: "580px",
-                  background: "#E5E7EB",
-                  borderRadius: "40px",
-                  padding: "12px",
-                  boxShadow:
-                    activePhone === 1
-                      ? "0 30px 60px rgba(0,0,0,0.12)"
-                      : "0 20px 40px rgba(0,0,0,0.12)",
-                  transform: activePhone === 1 ? "scale(1.05)" : "scale(1)",
-                  transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-                }}
-              >
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    background: "#FFFFFF",
-                    borderRadius: "32px",
-                    overflow: "hidden",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: "16px 20px 8px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      color: "#3A3A3D",
-                    }}
-                  >
-                    <span>9:41</span>
-                    <span>●●●●</span>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: "12px 20px",
-                      background: "#8893AD",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        background: "white",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF" }}>
-                        Tranquility Behavioral
-                      </div>
-                      <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>
-                        Online
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      flex: 1,
-                      padding: "16px",
-                      background: "#F8F9FA",
-                      overflow: "hidden",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    {(mounted
-                      ? chatMessages.slice(0, chatStep)
-                      : chatMessages.slice(0, 1)
-                    ).map((m) => (
-                      <div
-                        key={m.id}
-                        style={{
-                          marginBottom: "12px",
-                          display: "flex",
-                          justifyContent: m.outgoing
-                            ? "flex-end"
-                            : "flex-start",
-                          opacity: 0,
-                          animation: "fadeIn 0.5s forwards",
-                        }}
-                      >
-                        <div>
-                          <div
-                            style={{
-                              maxWidth: "80%",
-                              background: m.outgoing ? "#8893AD" : "#FFFFFF",
-                              color: m.outgoing ? "#FFFFFF" : "#3A3A3D",
-                              padding: "10px 14px",
-                              borderRadius: m.outgoing
-                                ? "16px 16px 4px 16px"
-                                : "16px 16px 16px 4px",
-                              fontSize: "12px",
-                              lineHeight: 1.5,
-                              boxShadow: m.outgoing
-                                ? "0 4px 12px rgba(0,0,0,0.10)"
-                                : "0 2px 8px rgba(0,0,0,0.05)",
-                              transition: "transform 0.3s",
-                            }}
-                          >
-                            {m.text}
-                          </div>
-                          <div
-                            style={{
-                              fontSize: "10px",
-                              color: "#A0A4AB",
-                              marginTop: "4px",
-                              textAlign: m.outgoing ? "right" : "left",
-                            }}
-                          >
-                            {m.time}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }`}</style>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: "12px 16px",
-                      borderTop: "1px solid #C9CCD1",
-                      background: "#FFFFFF",
-                    }}
-                  >
-                    <div
-                      style={{
-                        background: "#E5E7EB",
-                        borderRadius: "20px",
-                        padding: "10px 16px",
-                        fontSize: "12px",
-                        color: "#8893AD",
-                      }}
-                    >
-                      Type a message...
-                    </div>
-                  </div>
+              {/* Desktop mock panel (state 1) */}
+              <div style={{ position: "absolute", left: 0, right: 0, display: showDesktopMock ? "flex" : "none", alignItems: "center", justifyContent: "center", transition: "opacity 800ms ease", opacity: showDesktopMock ? 1 : 0 }}>
+                  <div style={{ pointerEvents: showDesktopMock ? "auto" : "none" }}>
+                  <DesktopMock isActive={showDesktopMock} />
                 </div>
               </div>
             </div>
@@ -656,7 +442,7 @@ export default function Waitlist() {
         </div>
       </section>
 
-      <section style={{ padding: "100px 24px", background: "#FFFFFF" }}>
+      <section style={{ padding: "32px 24px 100px", background: "#FFFFFF" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "60px" }}>
             <h2
