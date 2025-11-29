@@ -350,3 +350,65 @@
   border-color: var(--brand-1);
   color: white;
 }
+
+/* Waitlist landing responsive helpers */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-section {
+  padding: 24px 20px 60px;
+}
+
+.waitlist-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-carousel-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-wrapper {
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+}
+
+.phone-inner {
+  width: 100%;
+  height: auto;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 48px 40px 100px;
+  }
+
+  .waitlist-hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .phone-inner {
+    height: 580px; /* restore larger mock height on wider screens */
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
