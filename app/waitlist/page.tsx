@@ -321,7 +321,7 @@ export default function Waitlist() {
                 >
                   ●
                 </span>
-                <span>Build your network effortlessly</span>
+                <span>Connect & Build your Network Effortlessly</span>
               </li>
             </ul>
 
@@ -338,7 +338,7 @@ export default function Waitlist() {
                     color: "#2B2D31",
                   }}
                 >
-                  BE ONE OF THE FIRST TO GAIN ACCESS
+                  BE ONE OF THE FIRST TO GAIN ACCESS.
                 </div>
                 <StickyWaitlist
                   heroEmail={heroEmail}
@@ -583,7 +583,7 @@ export default function Waitlist() {
                 color: "#2B2D31",
               }}
             >
-              BE ONE OF THE FIRST TO GAIN ACCESS
+              BE ONE OF THE FIRST TO GAIN ACCESS.
             </h3>
             <form
               onSubmit={handleFooterSubmit}
