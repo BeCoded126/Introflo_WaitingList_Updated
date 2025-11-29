@@ -17,6 +17,8 @@ export default function Waitlist() {
   const [isSwiping, setIsSwiping] = useState(false);
   const [swipeDir, setSwipeDir] = useState<string | null>(null);
   const [showDesktopMock, setShowDesktopMock] = useState(false);
+  const [heroEmail, setHeroEmail] = useState("");
+  const [footerEmail, setFooterEmail] = useState("");
 
   // Device alternation: show desktop every other cycle
   const showDesktop = activePhone === 1;
@@ -326,7 +328,21 @@ export default function Waitlist() {
                 >
                   BE ONE OF THE FIRST TO GAIN ACCESS
                 </div>
-                <StickyWaitlist />
+                <StickyWaitlist
+                  heroEmail={heroEmail}
+                  setHeroEmail={setHeroEmail}
+                  handleHeroSubmit={(e: React.FormEvent) => {
+                    e.preventDefault();
+                    const value = heroEmail.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!value || !emailRegex.test(value)) {
+                      alert("Please enter a valid email address to join the waitlist.");
+                      return;
+                    }
+                    // Successful hero submit — open the join/tally form
+                    window.open("https://tally.so/r/n0pRk9", "_blank", "noopener,noreferrer");
+                  }}
+                />
               </div>
             )}
           </div>
@@ -569,7 +585,12 @@ export default function Waitlist() {
             >
               <input
                 type="email"
+                name="footerEmail"
                 placeholder="Enter email address"
+                value={footerEmail}
+                onChange={(e) => setFooterEmail(e.target.value)}
+                autoComplete="email"
+                data-lpignore="true"
                 style={{
                   flex: 1,
                   padding: "14px 18px",

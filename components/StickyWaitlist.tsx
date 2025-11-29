@@ -7,9 +7,16 @@ import React from "react";
  * Simplified: removed scroll handlers and fixed/floating behavior so the
  * input stays static in the document flow.
  */
-export default function StickyWaitlist() {
+type Props = {
+  heroEmail?: string;
+  setHeroEmail?: (v: string) => void;
+  handleHeroSubmit?: (e: React.FormEvent) => void;
+};
+
+export default function StickyWaitlist({ heroEmail = "", setHeroEmail, handleHeroSubmit }: Props) {
   return (
-    <div
+    <form onSubmit={handleHeroSubmit} style={{ width: "100%" }}>
+      <div
       id="waitlist-bar"
       style={{
         display: "flex",
@@ -27,6 +34,9 @@ export default function StickyWaitlist() {
       <input
         type="email"
         placeholder="Enter email address"
+        value={heroEmail}
+        onChange={(e) => setHeroEmail && setHeroEmail(e.target.value)}
+        autoComplete="email"
         style={{
           flex: 1,
           padding: "14px 18px",
@@ -54,13 +64,7 @@ export default function StickyWaitlist() {
           boxShadow: "0 4px 12px rgba(240,138,117,0.25)",
           transition: "all 0.2s",
         }}
-        onClick={() =>
-          window.open(
-            "https://tally.so/r/n0pRk9",
-            "_blank",
-            "noopener,noreferrer"
-          )
-        }
+        type="submit"
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-2px)";
           e.currentTarget.style.background = "#E27562";
@@ -76,5 +80,6 @@ export default function StickyWaitlist() {
         Join
       </button>
     </div>
+    </form>
   );
 }
