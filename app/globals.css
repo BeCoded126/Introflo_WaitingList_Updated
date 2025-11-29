@@ -85,6 +85,12 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* absolutely center the brand within the nav so it remains centered
+     even when there are links on the right */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .brand-link {

@@ -180,7 +180,7 @@
   border: 1px solid var(--accent-warm-primary);
   color: white;
   box-shadow: var(--shadow-warm);
-  transition: background .18s ease, transform .16s ease, box-shadow .25s ease;
+  transition: background 0.18s ease, transform 0.16s ease, box-shadow 0.25s ease;
 }
 
 .apply-filters-btn:hover {

@@ -1,10 +1,21 @@
 .card {
-  width: 840px;
-  height: 520px;
+  width: 100%;
+  min-height: 520px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
   background: white;
+}
+
+/* Card typography & color tokens for consistent soft-gray aesthetic */
+:root {
+  --card-title: #374151; /* darkest gray for titles */
+  --card-subtle: #4b5563; /* slightly darker gray for sub-labels */
+  --card-body: #6b7280; /* soft neutral gray for body text */
+  --card-title-size: 18px;
+  --card-body-size: 15px;
+  --card-line-height: 1.6;
+  --card-label-weight: 600; /* semi-bold for section titles */
 }
 
 /* Horizontal card layout */
@@ -18,6 +29,12 @@
   overflow: hidden;
   position: relative;
   background: #f3f4f6;
+}
+
+.card-media-figure {
+  width: 100%;
+  height: 520px; /* restore original full-size image height */
+  overflow: hidden;
 }
 
 .card-media img {
@@ -49,8 +66,12 @@
   padding: 16px 20px 0;
 }
 .card-title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: var(--card-title-size);
+  font-weight: var(--card-label-weight);
+  color: var(--card-title);
+  margin: 0;
+  margin-bottom: 6px;
+  text-transform: capitalize;
 }
 .badge {
   background: #144212;
@@ -61,31 +82,91 @@
 }
 .card-body {
   margin-top: 16px;
-  color: #556;
+  color: var(--card-body);
   padding: 0 20px 20px;
-  font-size: 15px;
+  font-size: var(--card-body-size);
+  line-height: var(--card-line-height);
+}
+.meta {
+  font-size: var(--card-body-size);
+  color: var(--card-body);
+}
+.distance {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #9aa0a6; /* lighter gray for distance */
+  line-height: 1.4;
 }
 .bio {
   margin-top: 8px;
-  font-size: 13px;
-  color: #4b5563;
-  line-height: 1.4;
+  font-size: var(--card-body-size);
+  color: var(--card-body);
+  line-height: var(--card-line-height);
 }
 .services {
-  margin-top: 16px;
-  font-size: 15px;
-  color: #788;
+  margin-top: 12px;
+  font-size: var(--card-body-size);
+  color: var(--card-subtle);
 }
 .insurances {
   margin-top: 12px;
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.4;
+  font-size: var(--card-body-size);
+  color: var(--card-subtle);
+  line-height: var(--card-line-height);
 }
 .insurances strong {
-  color: #374151;
+  color: var(--card-title);
+  font-weight: var(--card-label-weight);
+}
+
+/* Ensure inline labels (strong) within card body inherit the same color and font-size
+   so the copy remains visually identical to the previous design */
+.card-body strong {
+  color: inherit;
+  font-size: inherit;
   font-weight: 600;
 }
+
+/* Like / Dislike action row inside card media */
+.card-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center; /* centered under the card, matching mock */
+  padding: 12px 0 0 0;
+  margin: 0 12px 12px 12px;
+}
+
+.card-action {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 12px 30px rgba(16,24,40,0.12);
+  border: none;
+  cursor: pointer;
+}
+
+.card-action svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.card-action.dislike {
+  background: #fff;
+}
+
+.card-action.dislike svg path { fill: #111827; }
+
+.card-action.like {
+  background: #7b8496; /* muted bluish fill similar to mock */
+}
+
+.card-action.like svg path { fill: #fff; }
 .swipe-deck {
   display: flex;
   flex-direction: column;
@@ -254,6 +335,7 @@
   border: 1px solid #eee;
   background: white;
   font-size: 13px;
+  color: var(--card-subtle);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -267,4 +349,66 @@
   background: var(--brand-1);
   border-color: var(--brand-1);
   color: white;
+}
+
+/* Waitlist landing responsive helpers */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-section {
+  padding: 24px 20px 60px;
+}
+
+.waitlist-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-carousel-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-wrapper {
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+}
+
+.phone-inner {
+  width: 100%;
+  height: auto;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 48px 40px 100px;
+  }
+
+  .waitlist-hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .phone-inner {
+    height: 580px; /* restore larger mock height on wider screens */
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
 }

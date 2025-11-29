@@ -384,7 +384,7 @@ export default function SignIn() {
           color: var(--accent-warm-primary);
           font-weight: 600;
           text-decoration: none;
-          transition: color .18s ease, text-shadow .25s ease;
+          transition: color 0.18s ease, text-shadow 0.25s ease;
         }
 
         .signup-link a:hover {

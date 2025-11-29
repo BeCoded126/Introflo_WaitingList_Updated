@@ -197,7 +197,7 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background .18s ease, transform .16s ease, box-shadow .25s ease;
+  transition: background 0.18s ease, transform 0.16s ease, box-shadow 0.25s ease;
   flex-shrink: 0;
   box-shadow: var(--shadow-warm);
 }
