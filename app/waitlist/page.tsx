@@ -248,7 +248,7 @@ export default function Waitlist() {
                 maxWidth: "780px",
               }}
             >
-              To Verified Partners Who Are <u>Looking For You Too.</u>
+              With Verified Partners Who Are <u>Looking For You Too.</u>
             </h3>
 
             <ul
