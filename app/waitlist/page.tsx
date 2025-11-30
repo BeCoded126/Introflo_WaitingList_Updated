@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
-import DesktopMock from "@/components/DesktopMock";
 // Dynamically import sticky waitlist bar (client-only, no SSR) to prevent hydration drift
 const StickyWaitlist = dynamic(() => import("@/components/StickyWaitlist"), {
   ssr: false,
@@ -16,9 +15,6 @@ export default function Waitlist() {
   const [deckIndex, setDeckIndex] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const [swipeDir, setSwipeDir] = useState<string | null>(null);
-  const [showDesktopMock, setShowDesktopMock] = useState(false);
-  const [heroEmail, setHeroEmail] = useState("");
-  const [footerEmail, setFooterEmail] = useState("");
 
   // Device alternation: show desktop every other cycle
   const showDesktop = activePhone === 1;
@@ -84,15 +80,6 @@ export default function Waitlist() {
     return () => clearInterval(interval);
   }, [mounted]);
 
-  // Carousel: alternate between iPhones (state 0) and DesktopMock (state 1) every 8s
-  useEffect(() => {
-    if (!mounted) return;
-    const carousel = setInterval(() => {
-      setShowDesktopMock((s) => !s);
-    }, 8000);
-    return () => clearInterval(carousel);
-  }, [mounted]);
-
   const handleSwipe = (dir: "left" | "right") => {
     if (isSwiping) return;
     setSwipeDir(dir);
@@ -146,18 +133,6 @@ export default function Waitlist() {
     setMounted(true);
   }, []);
 
-  const handleFooterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const value = footerEmail.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!value || !emailRegex.test(value)) {
-      alert("Please enter a valid email address to join the waitlist.");
-      return;
-    }
-    // On success open the same tally form (keeps previous behavior)
-    window.open("https://tally.so/r/n0pRk9", "_blank", "noopener,noreferrer");
-  };
-
   // Note: No QR rendering on this page; QR generation removed to avoid unnecessary client work
   return (
     <div
@@ -204,13 +179,25 @@ export default function Waitlist() {
       </nav>
 
       {/* Hero Section */}
-        <section className="hero-section">
-          <div className="container">
-            <div className="waitlist-hero-grid">
+      <section
+        style={{
+          padding: "48px 40px 100px",
+          maxWidth: "1400px",
+          margin: "0 auto",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "80px",
+            alignItems: "center",
+          }}
+        >
           <div style={{ maxWidth: "600px" }}>
             <h1
               style={{
-                fontSize: "clamp(26.4px, 3.08vw, 41.8px)",
+                fontSize: "clamp(24px, 2.8vw, 38px)",
                 fontWeight: 800,
                 lineHeight: 1.1,
                 marginBottom: "12px",
@@ -236,7 +223,7 @@ export default function Waitlist() {
                 maxWidth: "780px",
               }}
             >
-              With Verified Partners Who Are <u>Looking For You Too.</u>
+              To Verified Partners Who Are <u>Looking For You Too.</u>
             </h3>
 
             <ul
@@ -309,7 +296,7 @@ export default function Waitlist() {
                 >
                   ●
                 </span>
-                <span>Connect & Build your Network Effortlessly</span>
+                <span>Build your network effortlessly</span>
               </li>
             </ul>
 
@@ -326,132 +313,342 @@ export default function Waitlist() {
                     color: "#2B2D31",
                   }}
                 >
-                  BE ONE OF THE FIRST TO GAIN ACCESS.
+                  BE ONE OF THE FIRST TO GAIN ACCESS
                 </div>
-                <StickyWaitlist
-                  heroEmail={heroEmail}
-                  setHeroEmail={setHeroEmail}
-                  handleHeroSubmit={(e: React.FormEvent) => {
-                    e.preventDefault();
-                    const value = heroEmail.trim();
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!value || !emailRegex.test(value)) {
-                      alert("Please enter a valid email address to join the waitlist.");
-                      return;
-                    }
-                    // Successful hero submit — open the join/tally form
-                    window.open("https://tally.so/r/n0pRk9", "_blank", "noopener,noreferrer");
-                  }}
-                />
+                <StickyWaitlist />
               </div>
             )}
           </div>
 
-          {/* Carousel container: renders phones (state 0) or desktop mock (state 1) */}
+          {/* Two iPhone Devices Side by Side (client-only to avoid hydration drift) */}
           {mounted && (
-            <div className="hero-carousel-wrapper" style={{ minHeight: "580px" }}>
-              {/* Phones panel (state 0) */}
+            <div
+              style={{
+                display: "flex",
+                gap: "30px",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* Phone 1 - Swipe Deck */}
               <div
                 style={{
-                  display: showDesktopMock ? "none" : "flex",
-                  gap: "30px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "opacity 800ms ease",
-                  opacity: showDesktopMock ? 0 : 1,
-                  width: "100%",
+                  width: "280px",
+                  height: "580px",
+                  background: "#E5E7EB", // Cool Mist Gray device frame
+                  borderRadius: "40px",
+                  padding: "12px",
+                  boxShadow:
+                    activePhone === 0
+                      ? "0 30px 60px rgba(0,0,0,0.12)"
+                      : "0 20px 40px rgba(0,0,0,0.12)",
+                  transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
+                  transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
                 }}
               >
-                {/* Phone 1 - Swipe Deck */}
                 <div
-                  <div className="phone-wrapper"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    background: "#FFFFFF",
+                    borderRadius: "32px",
+                    overflow: "hidden",
+                    position: "relative",
+                  }}
+                >
+                  <div
                     style={{
-                      background: "#E5E7EB",
-                      borderRadius: "40px",
-                      padding: "12px",
-                      boxShadow:
-                        activePhone === 0
-                          ? "0 30px 60px rgba(0,0,0,0.12)"
-                          : "0 20px 40px rgba(0,0,0,0.12)",
-                      transform: activePhone === 0 ? "scale(1.05)" : "scale(1)",
-                      transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+                      padding: "16px 20px 8px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      color: "#3A3A3D",
                     }}
                   >
-                    <div className="phone-inner" style={{ background: "#FFFFFF", borderRadius: "32px", overflow: "hidden", position: "relative" }}>
-                    <div style={{ padding: "16px 20px 8px", display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 600, color: "#3A3A3D" }}>
-                      <span>9:41</span>
-                      <span>●●●●</span>
-                    </div>
+                    <span>9:41</span>
+                    <span>●●●●</span>
+                  </div>
 
-                    <div style={{ padding: "16px 20px", textAlign: "center" }}>
-                      <div style={{ fontSize: "20px", fontWeight: 800, marginTop: "8px", color: "#2B2D31", letterSpacing: "0.3px" }}>
-                        introflo.io
-                      </div>
-                    </div>
-
-                    <div style={{ padding: "0 20px" }}>
-                      <div style={{ background: "#FFFFFF", borderRadius: "20px", overflow: "hidden", boxShadow: "0 8px 24px rgba(0,0,0,0.08)", transform: isSwiping ? (swipeDir === "left" ? "translateX(-420px) rotate(-15deg) scale(0.95)" : "translateX(420px) rotate(15deg) scale(0.95)") : "translateX(0) rotate(0) scale(1)", opacity: isSwiping ? 0 : 1, transition: "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms linear" }}>
-                        <div style={{ height: "220px", background: "#E5E7EB", display: "flex", alignItems: "center", justifyContent: "center", color: "#2B2D31", fontSize: "48px" }}>
-                          <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                        </div>
-                        <div style={{ padding: "16px" }}>
-                          <div style={{ fontSize: "16px", fontWeight: 700, marginBottom: "6px" }}>Tranquility Behavioral</div>
-                          <div style={{ fontSize: "12px", color: "#6b7280", marginBottom: "8px" }}>📍 Coral Springs, FL</div>
-                          <div style={{ fontSize: "10px", color: "#9ca3af" }}>Therapy • IOP • Counseling</div>
-                        </div>
-                      </div>
-
-                      <div style={{ display: "flex", gap: "16px", justifyContent: "center", marginTop: "20px" }}>
-                        <div aria-hidden style={{ width: "50px", height: "50px", borderRadius: "50%", background: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", userSelect: "none" }}>✕</div>
-                        <div aria-hidden style={{ width: "50px", height: "50px", borderRadius: "50%", background: "#8893AD", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", color: "#FFFFFF", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", userSelect: "none" }}>♥</div>
-                      </div>
+                  <div style={{ padding: "16px 20px", textAlign: "center" }}>
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: 800,
+                        marginTop: "8px",
+                        color: "#2B2D31",
+                        letterSpacing: "0.3px",
+                      }}
+                    >
+                      introflo.io
                     </div>
                   </div>
-                </div>
 
-                {/* Phone 2 */}
-                <div style={{ width: "280px", height: "580px", background: "#E5E7EB", borderRadius: "40px", padding: "12px", boxShadow: activePhone === 1 ? "0 30px 60px rgba(0,0,0,0.12)" : "0 20px 40px rgba(0,0,0,0.12)", transform: activePhone === 1 ? "scale(1.05)" : "scale(1)", transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}>
-                  <div className="phone-wrapper" style={{ background: "#E5E7EB", borderRadius: "40px", padding: "12px", boxShadow: activePhone === 1 ? "0 30px 60px rgba(0,0,0,0.12)" : "0 20px 40px rgba(0,0,0,0.12)", transform: activePhone === 1 ? "scale(1.05)" : "scale(1)", transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}>
-                    <div className="phone-inner" style={{ background: "#FFFFFF", borderRadius: "32px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-                  <div style={{ width: "100%", height: "100%", background: "#FFFFFF", borderRadius: "32px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-                    <div style={{ padding: "16px 20px 8px", display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 600, color: "#3A3A3D" }}>
-                      <span>9:41</span>
-                      <span>●●●●</span>
-                    </div>
-
-                    <div style={{ padding: "12px 20px", background: "#8893AD", display: "flex", alignItems: "center", gap: "12px" }}>
-                      <div style={{ width: "40px", height: "40px", borderRadius: "50%", overflow: "hidden", background: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <div style={{ padding: "0 20px" }}>
+                    <div
+                      style={{
+                        background: "#FFFFFF",
+                        borderRadius: "20px",
+                        overflow: "hidden",
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+                        transform: isSwiping
+                          ? swipeDir === "left"
+                            ? "translateX(-420px) rotate(-15deg) scale(0.95)"
+                            : "translateX(420px) rotate(15deg) scale(0.95)"
+                          : "translateX(0) rotate(0) scale(1)",
+                        opacity: isSwiping ? 0 : 1,
+                        transition:
+                          "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms linear",
+                      }}
+                    >
+                      <div
+                        style={{
+                          height: "220px",
+                          background: "#E5E7EB",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#2B2D31",
+                          fontSize: "48px",
+                        }}
+                      >
+                        <img
+                          src={cards[0].image}
+                          alt={cards[0].title}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF" }}>Tranquility Behavioral</div>
-                        <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>Online</div>
-                      </div>
-                    </div>
-
-                    <div style={{ flex: 1, padding: "16px", background: "#F8F9FA", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-                      {(mounted ? chatMessages.slice(0, chatStep) : chatMessages.slice(0, 1)).map((m) => (
-                        <div key={m.id} style={{ marginBottom: "12px", display: "flex", justifyContent: m.outgoing ? "flex-end" : "flex-start", opacity: 0, animation: "fadeIn 0.5s forwards" }}>
-                          <div>
-                            <div style={{ maxWidth: "80%", background: m.outgoing ? "#8893AD" : "#FFFFFF", color: m.outgoing ? "#FFFFFF" : "#3A3A3D", padding: "10px 14px", borderRadius: m.outgoing ? "16px 16px 4px 16px" : "16px 16px 16px 4px", fontSize: "12px", lineHeight: 1.5, boxShadow: m.outgoing ? "0 4px 12px rgba(0,0,0,0.10)" : "0 2px 8px rgba(0,0,0,0.05)", transition: "transform 0.3s" }}>{m.text}</div>
-                            <div style={{ fontSize: "10px", color: "#A0A4AB", marginTop: "4px", textAlign: m.outgoing ? "right" : "left" }}>{m.time}</div>
-                          </div>
+                      <div style={{ padding: "16px" }}>
+                        <div
+                          style={{
+                            fontSize: "16px",
+                            fontWeight: 700,
+                            marginBottom: "6px",
+                          }}
+                        >
+                          Tranquility Behavioral
                         </div>
-                      ))}
-                      <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+                        <div
+                          style={{
+                            fontSize: "12px",
+                            color: "#6b7280",
+                            marginBottom: "8px",
+                          }}
+                        >
+                          📍 Coral Springs, FL
+                        </div>
+                        <div style={{ fontSize: "10px", color: "#9ca3af" }}>
+                          Therapy • IOP • Counseling
+                        </div>
+                      </div>
                     </div>
 
-                    <div style={{ padding: "12px 16px", borderTop: "1px solid #C9CCD1", background: "#FFFFFF" }}>
-                      <div style={{ background: "#E5E7EB", borderRadius: "20px", padding: "10px 16px", fontSize: "12px", color: "#8893AD" }}>Type a message...</div>
-                    </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "16px",
+                          justifyContent: "center",
+                          marginTop: "20px",
+                        }}
+                      >
+                        <div
+                          aria-hidden="true"
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50%",
+                            background: "#FFFFFF",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "24px",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                            userSelect: "none",
+                          }}
+                        >
+                          ✕
+                        </div>
+                        <div
+                          aria-hidden="true"
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50%",
+                            background: "#8893AD",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "24px",
+                            color: "#FFFFFF",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                            userSelect: "none",
+                          }}
+                        >
+                          ♥
+                        </div>
+                      </div>
                   </div>
                 </div>
               </div>
 
-              {/* Desktop mock panel (state 1) */}
-              <div style={{ position: "absolute", left: 0, right: 0, display: showDesktopMock ? "flex" : "none", alignItems: "center", justifyContent: "center", transition: "opacity 800ms ease", opacity: showDesktopMock ? 1 : 0 }}>
-                  <div style={{ pointerEvents: showDesktopMock ? "auto" : "none" }}>
-                  <DesktopMock isActive={showDesktopMock} />
+              <div
+                style={{
+                  width: "280px",
+                  height: "580px",
+                  background: "#E5E7EB",
+                  borderRadius: "40px",
+                  padding: "12px",
+                  boxShadow:
+                    activePhone === 1
+                      ? "0 30px 60px rgba(0,0,0,0.12)"
+                      : "0 20px 40px rgba(0,0,0,0.12)",
+                  transform: activePhone === 1 ? "scale(1.05)" : "scale(1)",
+                  transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    background: "#FFFFFF",
+                    borderRadius: "32px",
+                    overflow: "hidden",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    style={{
+                      padding: "16px 20px 8px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      color: "#3A3A3D",
+                    }}
+                  >
+                    <span>9:41</span>
+                    <span>●●●●</span>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "12px 20px",
+                      background: "#8893AD",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                        background: "white",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF" }}>
+                        Tranquility Behavioral
+                      </div>
+                      <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>
+                        Online
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      flex: 1,
+                      padding: "16px",
+                      background: "#F8F9FA",
+                      overflow: "hidden",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    {(mounted
+                      ? chatMessages.slice(0, chatStep)
+                      : chatMessages.slice(0, 1)
+                    ).map((m) => (
+                      <div
+                        key={m.id}
+                        style={{
+                          marginBottom: "12px",
+                          display: "flex",
+                          justifyContent: m.outgoing
+                            ? "flex-end"
+                            : "flex-start",
+                          opacity: 0,
+                          animation: "fadeIn 0.5s forwards",
+                        }}
+                      >
+                        <div>
+                          <div
+                            style={{
+                              maxWidth: "80%",
+                              background: m.outgoing ? "#8893AD" : "#FFFFFF",
+                              color: m.outgoing ? "#FFFFFF" : "#3A3A3D",
+                              padding: "10px 14px",
+                              borderRadius: m.outgoing
+                                ? "16px 16px 4px 16px"
+                                : "16px 16px 16px 4px",
+                              fontSize: "12px",
+                              lineHeight: 1.5,
+                              boxShadow: m.outgoing
+                                ? "0 4px 12px rgba(0,0,0,0.10)"
+                                : "0 2px 8px rgba(0,0,0,0.05)",
+                              transition: "transform 0.3s",
+                            }}
+                          >
+                            {m.text}
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "10px",
+                              color: "#A0A4AB",
+                              marginTop: "4px",
+                              textAlign: m.outgoing ? "right" : "left",
+                            }}
+                          >
+                            {m.time}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "12px 16px",
+                      borderTop: "1px solid #C9CCD1",
+                      background: "#FFFFFF",
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "#E5E7EB",
+                        borderRadius: "20px",
+                        padding: "10px 16px",
+                        fontSize: "12px",
+                        color: "#8893AD",
+                      }}
+                    >
+                      Type a message...
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -459,7 +656,7 @@ export default function Waitlist() {
         </div>
       </section>
 
-      <section style={{ padding: "32px 24px 100px", background: "#FFFFFF" }}>
+      <section style={{ padding: "100px 24px", background: "#FFFFFF" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "60px" }}>
             <h2
@@ -572,10 +769,9 @@ export default function Waitlist() {
                 color: "#2B2D31",
               }}
             >
-              BE ONE OF THE FIRST TO GAIN ACCESS.
+              BE ONE OF THE FIRST TO GAIN ACCESS
             </h3>
-            <form
-              onSubmit={handleFooterSubmit}
+            <div
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -587,12 +783,7 @@ export default function Waitlist() {
             >
               <input
                 type="email"
-                name="footerEmail"
                 placeholder="Enter email address"
-                value={footerEmail}
-                onChange={(e) => setFooterEmail(e.target.value)}
-                autoComplete="email"
-                data-lpignore="true"
                 style={{
                   flex: 1,
                   padding: "14px 18px",
@@ -608,7 +799,6 @@ export default function Waitlist() {
                 }}
               />
               <button
-                type="submit"
                 style={{
                   padding: "14px 28px",
                   fontSize: "16px",
@@ -621,6 +811,13 @@ export default function Waitlist() {
                   boxShadow: "0 4px 12px rgba(240,138,117,0.25)",
                   transition: "all 0.2s",
                 }}
+                onClick={() =>
+                  window.open(
+                    "https://tally.so/r/n0pRk9",
+                    "_blank",
+                    "noopener,noreferrer"
+                  )
+                }
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px)";
                   e.currentTarget.style.boxShadow =
@@ -634,7 +831,7 @@ export default function Waitlist() {
               >
                 Join
               </button>
-            </form>
+            </div>
             <div
               style={{
                 fontSize: "14px",
