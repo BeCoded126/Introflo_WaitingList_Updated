@@ -164,15 +164,15 @@ export default function Home() {
           margin: "0 auto",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "80px",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ maxWidth: "600px" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "80px",
+              alignItems: "center",
+            }}
+          >
+          <div className="hero-content" style={{ maxWidth: "600px" }}>
             <h1
               style={{
                 fontSize: "clamp(42px, 5.4vw, 64px)",
@@ -621,6 +621,7 @@ export default function Home() {
             </p>
           </div>
           <div
+            className="features-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
@@ -644,7 +645,7 @@ export default function Home() {
                 desc: "All facilities verified and credentialed",
               },
             ].map((feature, i) => (
-              <div key={i} style={{ textAlign: "center", padding: "32px" }}>
+              <div key={i} className="feature-card" style={{ textAlign: "center", padding: "32px" }}>
                 <div style={{ fontSize: "48px", marginBottom: "16px" }}>
                   {feature.icon}
                 </div>

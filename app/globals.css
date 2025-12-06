@@ -137,3 +137,49 @@ a {
 .nav-link.active {
   color: #ff655c;
 }
+
+/* Mobile-only layout adjustments (max-width: 767px) */
+@media (max-width: 767px) {
+  .features-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    box-sizing: border-box;
+  }
+
+  .feature-card {
+    width: 100% !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-content {
+    padding: 24px 16px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .hero-content h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero-content p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Ensure form controls and CTAs inside hero fit the mobile width */
+  .hero-content input,
+  .hero-content button,
+  .hero-content .cta {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
