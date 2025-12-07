@@ -604,9 +604,7 @@ export default function Home() {
 
           {/* Desktop mockup shown under hero on mobile only (re-uses component) */}
           <div className="hero-desktop-mockup only-mobile">
-            <div className="hero-desktop-mockup-inner">
-              <DesktopMockup />
-            </div>
+            <DesktopMockup />
           </div>
         </div>
       </section>

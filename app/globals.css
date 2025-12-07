@@ -264,34 +264,33 @@ a {
       display: block !important;
     }
 
-    /* Hero desktop mockup: outer container centers the mockup on mobile
-       Inner wrapper scales the full component to preserve aspect ratio. */
+    /* Hero desktop mockup on mobile: center and allow the mockup to size naturally
+       Preserve aspect ratio by letting the mockup's own layout determine height. */
     .hero-desktop-mockup {
-      display: flex !important;
-      justify-content: center !important;
-      margin: 28px auto 20px !important;
       width: 100% !important;
+      max-width: 360px !important;
+      margin: 32px auto 40px !important;
+      display: block !important;
       box-sizing: border-box !important;
     }
 
-    /* Scale the entire mockup without altering internal proportions */
-    .hero-desktop-mockup-inner {
-      transform: scale(0.72) !important; /* tweak 0.6-0.8 as needed */
-      transform-origin: top center !important;
-      display: inline-block !important;
-      width: auto !important;
-      max-width: 320px !important;
-    }
-
-    /* Ensure no child element is forced to stretch: allow intrinsic sizing */
-    .hero-desktop-mockup-inner img,
-    .hero-desktop-mockup-inner svg,
-    .hero-desktop-mockup-inner canvas,
-    .hero-desktop-mockup-inner > * {
-      width: auto !important;
+    /* Ensure the mockup's internal elements keep their intrinsic aspect ratio
+       and are not stretched by width/height forcing. */
+    .hero-desktop-mockup img,
+    .hero-desktop-mockup svg,
+    .hero-desktop-mockup > div {
+      width: 100% !important;
       height: auto !important;
       max-width: 100% !important;
+      object-fit: contain !important;
       display: block !important;
+    }
+
+    /* Remove any transform-based scaling on mobile to avoid distortion */
+    .hero-desktop-mockup,
+    .hero-desktop-mockup-inner {
+      transform: none !important;
+      transform-origin: center center !important;
     }
 
     /* Ensure phone mockups (desktop placement) are hidden on mobile */
