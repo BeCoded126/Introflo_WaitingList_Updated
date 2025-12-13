@@ -126,7 +126,7 @@ export default function DesktopMockup({ isActive = true }: { isActive?: boolean 
 
   return (
     <div className="w-full h-full flex items-center justify-center" style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div className="w-full h-full flex items-center justify-center" style={{ width: "100%", maxWidth: monitorWidth, maxHeight: monitorHeight, display: "flex", flexDirection: "column", alignItems: "center", boxSizing: "border-box" }}>
+      <div className="w-full h-full flex items-center justify-center desktop-mockup-wrapper" style={{ width: "100%", maxWidth: monitorWidth, maxHeight: monitorHeight, display: "flex", flexDirection: "column", alignItems: "center", boxSizing: "border-box" }}>
         {/* Monitor bezel (fixed width, reduced height) */}
         <div
           className="max-w-full max-h-full object-contain"

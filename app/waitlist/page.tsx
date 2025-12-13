@@ -8,6 +8,14 @@ const StickyWaitlist = dynamic(() => import("@/components/StickyWaitlist"), {
 });
 import DesktopMockup from "../components/DesktopMockup";
 
+/* DEVTOOLS CHECK INSTRUCTIONS (for hero file)
+  1. Open DevTools and inspect the hero waitlist container.
+  2. Confirm the element has: data-debug="hero-waitlist" and class="hero-waitlist".
+  3. Resize viewport under 768px — verify a red outline appears around the container.
+  4. If the outline is missing: check that `app/globals.css` is loaded (see app/layout.tsx import),
+     and confirm the rule `@media (max-width: 768px) { .hero-section .hero-waitlist[data-debug="hero-waitlist"] { outline: 3px solid red !important } }` exists in that file.
+*/
+
 export default function Waitlist() {
   // Hydration stabilization: track mounted state so we can delay animations
   const [mounted, setMounted] = useState(false);
@@ -51,30 +59,10 @@ export default function Waitlist() {
 
   // Define a simple scripted chat sequence for animation
   const chatMessages = [
-    {
-      id: 1,
-      text: "So glad we matched — excited to connect!",
-      time: "2:30 PM",
-      outgoing: false,
-    },
-    {
-      id: 2,
-      text: "Thanks — we'd love that. Want to hop on a quick call to explore referrals?",
-      time: "2:31 PM",
-      outgoing: true,
-    },
-    {
-      id: 3,
-      text: "Yes — how about Thursday at 3:00 PM? I can share how we can refer patients.",
-      time: "2:32 PM",
-      outgoing: false,
-    },
-    {
-      id: 4,
-      text: "Thursday 3 works for me. I'll send a calendar invite — excited to connect!",
-      time: "2:33 PM",
-      outgoing: true,
-    },
+    { id: 1, text: "Hi there — thanks for checking out Introflo!", time: "2:30 PM", outgoing: false },
+    { id: 2, text: "We make it easier to find verified partners and referrals.", time: "2:31 PM", outgoing: true },
+    { id: 3, text: "Would you like a quick tour of how matching works?", time: "2:32 PM", outgoing: false },
+    { id: 4, text: "Great — we'll email you a short walkthrough.", time: "2:33 PM", outgoing: true },
   ];
 
   // Begin phone swap animation only after mount (prevents early client/server divergence)
@@ -85,6 +73,7 @@ export default function Waitlist() {
     }, 8000); // changed to 8 seconds per request
     return () => clearInterval(interval);
   }, [mounted]);
+
 
   const handleSwipe = (dir: "left" | "right") => {
     if (isSwiping) return;
@@ -147,7 +136,9 @@ export default function Waitlist() {
       alert("Please enter a valid email address to join the waitlist.");
       return;
     }
-    window.location.href = `${TALLY_URL}?hero_email=${encodeURIComponent(value)}`;
+    window.location.href = `${TALLY_URL}?hero_email=${encodeURIComponent(
+      value
+    )}`;
   };
 
   const handleFooterSubmit = (e?: React.MouseEvent | React.FormEvent) => {
@@ -158,7 +149,9 @@ export default function Waitlist() {
       alert("Please enter a valid email address to join the waitlist.");
       return;
     }
-    window.location.href = `${TALLY_URL}?footer_email=${encodeURIComponent(value)}`;
+    window.location.href = `${TALLY_URL}?footer_email=${encodeURIComponent(
+      value
+    )}`;
   };
 
   // Note: No QR rendering on this page; QR generation removed to avoid unnecessary client work
@@ -207,7 +200,10 @@ export default function Waitlist() {
       </nav>
 
       {/* Hero Section */}
+      {/* HERO FILE: /Users/snipergang/Desktop/Introflo.io/app/waitlist/page.tsx */}
+      {/* FOOTER FILE: /Users/snipergang/Desktop/Introflo.io/app/waitlist/page.tsx (footer block lower in same file) */}
       <section
+        className="hero-section"
         style={{
           padding: "48px 40px 40px",
           maxWidth: "1400px",
@@ -223,7 +219,7 @@ export default function Waitlist() {
           }}
         >
           <div style={{ maxWidth: "600px" }}>
-            <h1
+            <h1 className="hero-title"
               style={{
                 fontSize: "clamp(24px, 2.8vw, 38px)",
                 fontWeight: 800,
@@ -255,6 +251,7 @@ export default function Waitlist() {
             </h3>
 
             <ul
+              className="hero-bullets"
               style={{
                 listStyle: "none",
                 paddingLeft: 0,
@@ -274,6 +271,7 @@ export default function Waitlist() {
                 }}
               >
                 <span
+                  className="bullet-dot"
                   aria-hidden="true"
                   style={{
                     fontSize: "0.575em",
@@ -296,6 +294,7 @@ export default function Waitlist() {
                 }}
               >
                 <span
+                  className="bullet-dot"
                   aria-hidden="true"
                   style={{
                     fontSize: "0.575em",
@@ -313,6 +312,7 @@ export default function Waitlist() {
                 style={{ display: "flex", alignItems: "center", gap: "12px" }}
               >
                 <span
+                  className="bullet-dot"
                   aria-hidden="true"
                   style={{
                     fontSize: "0.575em",
@@ -331,8 +331,9 @@ export default function Waitlist() {
             {/* Problem → Outcome bullets removed per request */}
             {/* Waitlist input field (dynamically loaded client-only component) */}
             {mounted && (
-              <div style={{ marginTop: 20 }}>
+              <div className="hero-join" style={{ marginTop: 20 }}>
                 <div
+                  className="hero-access-title"
                   style={{
                     fontSize: 24,
                     fontWeight: 800,
@@ -343,14 +344,31 @@ export default function Waitlist() {
                 >
                   BE ONE OF THE FIRST TO GAIN ACCESS.
                 </div>
-                <StickyWaitlist heroEmail={heroEmail} setHeroEmail={setHeroEmail} handleHeroSubmit={handleHeroSubmit} />
+                <StickyWaitlist
+                  heroEmail={heroEmail}
+                  setHeroEmail={setHeroEmail}
+                  handleHeroSubmit={handleHeroSubmit}
+                />
+                <div
+                  suppressHydrationWarning
+                  className="hero-laptop hero-laptop-mobile only-mobile"
+                  style={{ marginTop: "0px", display: "flex", justifyContent: "center", padding: "0 24px" }}
+                >
+                  <img
+                    suppressHydrationWarning
+                    src="/images/MobileView_Static.png"
+                    alt="Introflo mobile mockup"
+                    style={{ width: "100%", maxWidth: "420px", height: "auto", borderRadius: "24px", display: "block" }}
+                  />
+                </div>
               </div>
             )}
           </div>
 
           {/* Shared mockup container that holds both mobile and desktop layers */}
-          {mounted && (
+            {mounted && (
             <div
+              className="hero-mockups only-desktop"
               style={{
                 width: "590px", // two phones (280 + 280) + 30 gap
                 height: "580px",
@@ -361,19 +379,21 @@ export default function Waitlist() {
               }}
             >
               {/* Mobile layer: two phones side-by-side */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  gap: "30px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "opacity 600ms cubic-bezier(0.4,0,0.2,1), transform 600ms cubic-bezier(0.4,0,0.2,1)",
-                  opacity: showDesktop ? 0 : 1,
-                  transform: showDesktop ? "scale(0.98)" : "scale(1)",
-                }}
-              >
+                <div
+                  className="phone-mockups only-desktop"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    gap: "30px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition:
+                      "opacity 600ms cubic-bezier(0.4,0,0.2,1), transform 600ms cubic-bezier(0.4,0,0.2,1)",
+                    opacity: showDesktop ? 0 : 1,
+                    transform: showDesktop ? "scale(0.98)" : "scale(1)",
+                  }}
+                >
                 {/* Phone 1 - Swipe Deck */}
                 <div
                   style={{
@@ -491,50 +511,50 @@ export default function Waitlist() {
                         </div>
                       </div>
 
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "16px",
+                          justifyContent: "center",
+                          marginTop: "20px",
+                        }}
+                      >
                         <div
+                          aria-hidden="true"
                           style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50%",
+                            background: "#FFFFFF",
                             display: "flex",
-                            gap: "16px",
+                            alignItems: "center",
                             justifyContent: "center",
-                            marginTop: "20px",
+                            fontSize: "24px",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                            userSelect: "none",
                           }}
                         >
-                          <div
-                            aria-hidden="true"
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                              background: "#FFFFFF",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: "24px",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                              userSelect: "none",
-                            }}
-                          >
-                            ✕
-                          </div>
-                          <div
-                            aria-hidden="true"
-                            style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                              background: "#8893AD",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: "24px",
-                              color: "#FFFFFF",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                              userSelect: "none",
-                            }}
-                          >
-                            ♥
-                          </div>
+                          ✕
                         </div>
+                        <div
+                          aria-hidden="true"
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50%",
+                            background: "#8893AD",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "24px",
+                            color: "#FFFFFF",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                            userSelect: "none",
+                          }}
+                        >
+                          ♥
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -600,13 +620,32 @@ export default function Waitlist() {
                           justifyContent: "center",
                         }}
                       >
-                        <img src={cards[0].image} alt={cards[0].title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <img
+                          src={cards[0].image}
+                          alt={cards[0].title}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
                       </div>
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ fontSize: "14px", fontWeight: 700, color: "#FFFFFF" }}>
+                        <div
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: 700,
+                            color: "#FFFFFF",
+                          }}
+                        >
                           Tranquility Behavioral
                         </div>
-                        <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)" }}>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            color: "rgba(255, 255, 255, 0.9)",
+                          }}
+                        >
                           Online
                         </div>
                       </div>
@@ -697,25 +736,36 @@ export default function Waitlist() {
                 </div>
               </div>
 
+              
               {/* Desktop layer: center the DesktopMockup and scale to fit the same footprint */}
-              <div
+              <div className="hero-laptop only-desktop"
                 style={{
                   position: "absolute",
                   inset: 0,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  transition: "opacity 600ms cubic-bezier(0.4,0,0.2,1), transform 600ms cubic-bezier(0.4,0,0.2,1)",
+                  transition:
+                    "opacity 600ms cubic-bezier(0.4,0,0.2,1), transform 600ms cubic-bezier(0.4,0,0.2,1)",
                   opacity: showDesktop ? 1 : 0,
                   transform: showDesktop ? "scale(1)" : "scale(0.98)",
                 }}
               >
-                <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <DesktopMockup />
                 </div>
               </div>
             </div>
           )}
+            {/* Mobile-only laptop under the hero copy (moved into .hero-join) */}
         </div>
       </section>
 
