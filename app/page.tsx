@@ -7,7 +7,7 @@ import Image from "next/image";
 import DesktopMockup from "./components/DesktopMockup";
 import QRCode from "qrcode";
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const [activePhone, setActivePhone] = useState(0);
   const [qrCode, setQrCode] = useState("");
   const [qrTarget, setQrTarget] = useState("");
