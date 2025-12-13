@@ -2,70 +2,67 @@
 > introflo.io@0.1.0 dev
 > next dev
 
+ ⚠ Port 3000 is in use by process 67781, using available port 3001 instead.
    ▲ Next.js 15.5.6
-   - Local:        http://localhost:3000
-   - Network:      http://192.168.0.60:3000
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.0.60:3001
    - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.1s
- ✓ Compiled /middleware in 124ms (114 modules)
+ ✓ Ready in 1458ms
+ ✓ Compiled /middleware in 120ms (114 modules)
  ○ Compiling /waitlist ...
- ✓ Compiled /waitlist in 791ms (548 modules)
- GET /waitlist 200 in 1730ms
- GET /waitlist 200 in 103ms
- GET /waitlist 200 in 70ms
- GET /waitlist 200 in 119ms
- ✓ Compiled in 676ms (548 modules)
- GET /waitlist 200 in 275ms
- ✓ Compiled in 460ms (554 modules)
- GET /waitlist 200 in 197ms
- ✓ Compiled in 711ms (554 modules)
- ✓ Compiled in 182ms (554 modules)
- GET /waitlist 200 in 278ms
- GET /waitlist 200 in 126ms
+ ✓ Compiled /waitlist in 552ms (554 modules)
+ HEAD /waitlist ✓ Compiled in 937ms (554 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/snipergang/Desktop/Introflo.io GET /waitlist 200 in 362ms
+ ✓ Compiled in 150ms (231 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/d ✓ Compiled in 520ms (231 modules)
+<w> [webpack.cache.PackF GET /waitlist 200 in 143ms
+ GET /waitlist 200 in 39ms
+ ✓ Compiled in 360ms (554 modules)
+ ✓ Compiled in 599ms (568 modules)
+ GET /waitlist 200 in 225ms
+ GET /waitlist 200 in 43ms
+ GET /waitlist 200 in 46ms
+ GET /waitlist 200 in 43ms
+ ✓ Compiled in 337ms (554 modules)
+ ✓ Compiled in 241ms (568 modules)
+ GET /waitlist 200 in 166ms
+ GET /waitlist 200 in 41ms
+ GET /waitlist 200 in 57ms
+ ✓ Compiled in 307ms (554  ✓ Comp ✓ Compiled in 422ms (554 modules)
+ GET /waitlist 200 in 173ms
+ ✓ Compiled in 311ms (568 modules)
+ ✓ Compiled in 224ms (568 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/client-development/0.pack.gz_' -> '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/client-development/0.pack.gz'
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/server-development/0.pack.gz_' -> '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/server-development/0.pack.gz'
+ ✓ Compiled in 435ms (568 modules)
+ ✓ Compiled in 285ms (568 modules)
+ ✓ Compiled in 212ms (568 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/client-development/0.pack.gz_' -> '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/client-development/0.pack.gz'
+ ✓ Compiled in 604ms (568 modules)
+ ✓ Compiled in 267ms (568 modules)
+ms (568 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /waitlist 200 in 82ms
+ GET /waitlist 200 in 86ms
  GET /waitlist 200 in 67ms
- ⨯ ./app/waitlist/page.tsx
-Error:   [31mx[0m Unexpected token `{`. Expected identifier, string literal, numeric literal or [ for the computed key
-    ,-[[36;1;4m/Users/snipergang/Desktop/Introflo.io/app/waitlist/page.tsx[0m:32:1]
- [2m29[0m |     {
- [2m30[0m |       title: "Tranquility Behavioral",
- [2m31[0m |       image: "/images/interior-1.jpg",
- [2m32[0m |                 {activeMockup === "mobile" ? (
-    : [35;1m                ^[0m
- [2m33[0m |                   <div style={{ display: "flex", gap: "30px", alignItems: "center", justifyContent: "center" }}>
- [2m34[0m |                     <div style={{ width: "280px", height: "580px", background: "#E5E7EB", borderRadius: "40px", padding: "12px", boxShadow: activePhone === 0 ? "0 30px 60px rgba(0,0,0,0.12)" : "0 20px 40px rgba(0,0,0,0.12)", transform: activePhone === 0 ? "scale(1.05)" : "scale(1)", transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}>
- [2m35[0m |                       <div style={{ width: "100%", height: "100%", background: "#FFFFFF", borderRadius: "32px", overflow: "hidden", position: "relative" }}>
-    `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/waitlist/page.tsx
- ✓ Compiled in 505ms (548 modules)
- GET /waitlist 200 in 278ms
- GET /waitlist 200 in 67ms
- GET /waitlist 200 in 69ms
- GET /waitlist? 200 in 84ms
- GET /waitlist? 200 in 77ms
- GET /waitlist 200 in 88ms
- ✓ Compiled in 512ms (554 modules)
- GET /waitlist 200 in 242ms
- GET /waitlist 200 in 75ms
- GET /waitlist 200 in 147ms
- ✓ Compiled in 662ms (554 modules)
- GET /waitlist 200 in 222ms
- ✓ Compiled in 1093ms (554 modules)
- GET /waitlist 200 in 283ms
- ✓ Compiled in 628ms (554 modules)
- ✓ Compiled in 326ms (554 modules)
- GET /waitlist 200 in 152ms
- ✓ Compiled in 186ms (554 modules)
- GET /waitlist 200 in 132ms
- GET /waitlist 200 in 87ms
+ GET /waitlist 200 in 37ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/server-development/0.pack.gz_' -> '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/server-development/0.pack.gz'
+ GET /waitlist 200 in 133ms
+ GET /waitlist 200 in 79ms
  GET /waitlist 200 in 71ms
- ✓ Compiled in 587ms (554 modules)
- GET /waitlist 200 in 219ms
  GET /waitlist 200 in 75ms
- GET /waitlist 200 in 71ms
+ GET /waitlist 200 in 145ms
+ ✓ Compiled in 401ms (568 modules)
+ GET /waitlist 200 in 223ms
+ GET /waitlist 200 in 129ms
+ GET /waitlist 200 in 49ms
+ GET /waitlist 200 in 73ms
+ GET /waitlist 200 in 39ms
+ ✓ Compiled in 296ms (568 modules)
+ GET /waitlist 200 in 73ms
+ GET /waitlist 200 in 125ms
+ GET /waitlist 200 in 40ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/server-development/0.pack.gz_' -> '/Users/snipergang/Desktop/Introflo.io/.next/cache/webpack/server-development/0.pack.gz'
+ GET /waitlist 200 in 84ms

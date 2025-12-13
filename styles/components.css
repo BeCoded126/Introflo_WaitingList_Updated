@@ -145,7 +145,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  box-shadow: 0 12px 30px rgba(16,24,40,0.12);
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.12);
   border: none;
   cursor: pointer;
 }
@@ -160,13 +160,17 @@
   background: #fff;
 }
 
-.card-action.dislike svg path { fill: #111827; }
+.card-action.dislike svg path {
+  fill: #111827;
+}
 
 .card-action.like {
   background: #7b8496; /* muted bluish fill similar to mock */
 }
 
-.card-action.like svg path { fill: #fff; }
+.card-action.like svg path {
+  fill: #fff;
+}
 .swipe-deck {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,20 @@
+
+> introflo.io@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.6
+   - Local:        http://localhost:3000
+   - Network:      http://10.1.10.67:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 4.6s
+ ✓ Compiled /middleware in 195ms (114 modules)
+ ○ Compiling /waitlist ...
+ ✓ Compiled /waitlist in 848ms (568 modules)
+ GET /waitlist 200 in 1112ms
+ GET /waitlist 200 in 104ms
+ GET /waitlist 200 in 84ms
+ GET /waitlist 200 in 50ms
+ GET /waitlist 200 in 63ms
+ GET /waitlist 200 in 61ms
