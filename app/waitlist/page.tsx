@@ -59,10 +59,30 @@ export default function Waitlist() {
 
   // Define a simple scripted chat sequence for animation
   const chatMessages = [
-    { id: 1, text: "Hi there — thanks for checking out Introflo!", time: "2:30 PM", outgoing: false },
-    { id: 2, text: "We make it easier to find verified partners and referrals.", time: "2:31 PM", outgoing: true },
-    { id: 3, text: "Would you like a quick tour of how matching works?", time: "2:32 PM", outgoing: false },
-    { id: 4, text: "Great — we'll email you a short walkthrough.", time: "2:33 PM", outgoing: true },
+    {
+      id: 1,
+      text: "Hi there — thanks for checking out Introflo!",
+      time: "2:30 PM",
+      outgoing: false,
+    },
+    {
+      id: 2,
+      text: "We make it easier to find verified partners and referrals.",
+      time: "2:31 PM",
+      outgoing: true,
+    },
+    {
+      id: 3,
+      text: "Would you like a quick tour of how matching works?",
+      time: "2:32 PM",
+      outgoing: false,
+    },
+    {
+      id: 4,
+      text: "Great — we'll email you a short walkthrough.",
+      time: "2:33 PM",
+      outgoing: true,
+    },
   ];
 
   // Begin phone swap animation only after mount (prevents early client/server divergence)
@@ -73,7 +93,6 @@ export default function Waitlist() {
     }, 8000); // changed to 8 seconds per request
     return () => clearInterval(interval);
   }, [mounted]);
-
 
   const handleSwipe = (dir: "left" | "right") => {
     if (isSwiping) return;
@@ -219,7 +238,8 @@ export default function Waitlist() {
           }}
         >
           <div style={{ maxWidth: "600px" }}>
-            <h1 className="hero-title"
+            <h1
+              className="hero-title"
               style={{
                 fontSize: "clamp(24px, 2.8vw, 38px)",
                 fontWeight: 800,
@@ -352,13 +372,24 @@ export default function Waitlist() {
                 <div
                   suppressHydrationWarning
                   className="hero-laptop hero-laptop-mobile only-mobile"
-                  style={{ marginTop: "0px", display: "flex", justifyContent: "center", padding: "0 24px" }}
+                  style={{
+                    marginTop: "0px",
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "0 24px",
+                  }}
                 >
                   <img
                     suppressHydrationWarning
                     src="/images/MobileView_Static.png"
                     alt="Introflo mobile mockup"
-                    style={{ width: "100%", maxWidth: "420px", height: "auto", borderRadius: "24px", display: "block" }}
+                    style={{
+                      width: "100%",
+                      maxWidth: "420px",
+                      height: "auto",
+                      borderRadius: "24px",
+                      display: "block",
+                    }}
                   />
                 </div>
               </div>
@@ -366,7 +397,7 @@ export default function Waitlist() {
           </div>
 
           {/* Shared mockup container that holds both mobile and desktop layers */}
-            {mounted && (
+          {mounted && (
             <div
               className="hero-mockups only-desktop"
               style={{
@@ -379,21 +410,21 @@ export default function Waitlist() {
               }}
             >
               {/* Mobile layer: two phones side-by-side */}
-                <div
-                  className="phone-mockups only-desktop"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    gap: "30px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition:
-                      "opacity 600ms cubic-bezier(0.4,0,0.2,1), transform 600ms cubic-bezier(0.4,0,0.2,1)",
-                    opacity: showDesktop ? 0 : 1,
-                    transform: showDesktop ? "scale(0.98)" : "scale(1)",
-                  }}
-                >
+              <div
+                className="phone-mockups only-desktop"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  gap: "30px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition:
+                    "opacity 600ms cubic-bezier(0.4,0,0.2,1), transform 600ms cubic-bezier(0.4,0,0.2,1)",
+                  opacity: showDesktop ? 0 : 1,
+                  transform: showDesktop ? "scale(0.98)" : "scale(1)",
+                }}
+              >
                 {/* Phone 1 - Swipe Deck */}
                 <div
                   style={{
@@ -736,9 +767,9 @@ export default function Waitlist() {
                 </div>
               </div>
 
-              
               {/* Desktop layer: center the DesktopMockup and scale to fit the same footprint */}
-              <div className="hero-laptop only-desktop"
+              <div
+                className="hero-laptop only-desktop"
                 style={{
                   position: "absolute",
                   inset: 0,
@@ -765,7 +796,7 @@ export default function Waitlist() {
               </div>
             </div>
           )}
-            {/* Mobile-only laptop under the hero copy (moved into .hero-join) */}
+          {/* Mobile-only laptop under the hero copy (moved into .hero-join) */}
         </div>
       </section>
 
